@@ -19,21 +19,12 @@ import com.salesmanager.core.business.services.system.ModuleConfigurationService
 import com.salesmanager.core.model.system.IntegrationModule;
 import com.salesmanager.test.configuration.ConfigurationTest;
 
-
-
-
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = {ConfigurationTest.class})
 @Ignore
 public class ImportIntegrationModule  {
 
-	@Inject
 	private IntegrationModulesLoader integrationModulesLoader;
-	
-	
-	@Inject
 	private ModuleConfigurationService moduleCongigurationService;
 	
 	/**
@@ -113,12 +104,9 @@ public class ImportIntegrationModule  {
 				}
 
 			}
-
-
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
 	
 	}
-
 }

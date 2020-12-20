@@ -1,22 +1,5 @@
 package com.salesmanager.shop.store.controller.store.facade;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
-import com.salesmanager.shop.populator.store.ReadableMerchantStorePopulatorWithDetails;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.Validate;
-import org.drools.core.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 import com.salesmanager.core.business.exception.ConversionException;
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.services.content.ContentService;
@@ -42,44 +25,43 @@ import com.salesmanager.shop.model.store.ReadableMerchantStore;
 import com.salesmanager.shop.model.store.ReadableMerchantStoreList;
 import com.salesmanager.shop.populator.store.PersistableMerchantStorePopulator;
 import com.salesmanager.shop.populator.store.ReadableMerchantStorePopulator;
+import com.salesmanager.shop.populator.store.ReadableMerchantStorePopulatorWithDetails;
 import com.salesmanager.shop.store.api.exception.ConversionRuntimeException;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.utils.ImageFilePath;
 import com.salesmanager.shop.utils.LanguageUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.Validate;
+import org.drools.core.util.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
-@Service("storeFacade")
-public class StoreFacadeImpl implements StoreFacade {
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-	@Inject
-	private MerchantStoreService merchantStoreService;
+@Slf4j
+@RequiredArgsConstructor
+@Service
+class StoreFacadeImpl implements StoreFacade {
 
-	@Inject
-	private MerchantConfigurationService merchantConfigurationService;
-
-	@Inject
-	private LanguageService languageService;
-
-	@Inject
-	private CountryService countryService;
-
-	@Inject
-	private ZoneService zoneService;
-
-	@Inject
-	private ContentService contentService;
-
-	@Inject
-	private PersistableMerchantStorePopulator persistableMerchantStorePopulator;
-
-	@Inject
+	private final MerchantStoreService merchantStoreService;
+	private final MerchantConfigurationService merchantConfigurationService;
+	private final LanguageService languageService;
+	private final CountryService countryService;
+	private final ZoneService zoneService;
+	private final ContentService contentService;
+	private final PersistableMerchantStorePopulator persistableMerchantStorePopulator;
+	private final LanguageUtils languageUtils;
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
-
-	@Inject
-	private LanguageUtils languageUtils;
-
-	private static final Logger LOG = LoggerFactory.getLogger(StoreFacadeImpl.class);
 
 	@Override
 	public MerchantStore getByCode(HttpServletRequest request) {
@@ -95,7 +77,7 @@ public class StoreFacadeImpl implements StoreFacade {
 		try {
 			return merchantStoreService.getByCode(code);
 		} catch (ServiceException e) {
-			LOG.error("Error while getting MerchantStore", e);
+			LOGGER.error("Error while getting MerchantStore", e);
 			throw new ServiceRuntimeException(e);
 		}
 
@@ -301,7 +283,7 @@ public class StoreFacadeImpl implements StoreFacade {
 		try {
 			merchantStoreService.delete(mStore);
 		} catch (Exception e) {
-			LOG.error("Error while deleting MerchantStore", e);
+			LOGGER.error("Error while deleting MerchantStore", e);
 			throw new ServiceRuntimeException("Error while deleting MerchantStore " + e.getMessage());
 		}
 

@@ -14,13 +14,11 @@ import com.salesmanager.core.model.catalog.product.attribute.ProductAttribute;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
 
-@Service("productAttributeService")
-public class ProductAttributeServiceImpl extends
-		SalesManagerEntityServiceImpl<Long, ProductAttribute> implements ProductAttributeService {
+@Service
+class ProductAttributeServiceImpl extends SalesManagerEntityServiceImpl<Long, ProductAttribute> implements ProductAttributeService {
 	
-	private ProductAttributeRepository productAttributeRepository;
+	private final ProductAttributeRepository productAttributeRepository;
 
-	@Inject
 	public ProductAttributeServiceImpl(ProductAttributeRepository productAttributeRepository) {
 		super(productAttributeRepository);
 		this.productAttributeRepository = productAttributeRepository;

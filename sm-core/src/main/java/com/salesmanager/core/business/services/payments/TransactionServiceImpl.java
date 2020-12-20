@@ -8,10 +8,10 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.order.Order;
 import com.salesmanager.core.model.payments.Transaction;
 import com.salesmanager.core.model.payments.TransactionType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,14 +21,12 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 
-
-@Service("transactionService")
-public class TransactionServiceImpl  extends SalesManagerEntityServiceImpl<Long, Transaction> implements TransactionService {
+@Slf4j
+@Service
+class TransactionServiceImpl  extends SalesManagerEntityServiceImpl<Long, Transaction> implements TransactionService {
 	
-
-	private TransactionRepository transactionRepository;
+	private final TransactionRepository transactionRepository;
 	
-	@Inject
 	public TransactionServiceImpl(TransactionRepository transactionRepository) {
 		super(transactionRepository);
 		this.transactionRepository = transactionRepository;

@@ -1,39 +1,30 @@
 package com.salesmanager.core.business.services.shipping;
 
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.salesmanager.core.business.repositories.shipping.ShippingOriginRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.shipping.ShippingOrigin;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 
+@Slf4j
+@Service
+class ShippingOriginServiceImpl extends SalesManagerEntityServiceImpl<Long, ShippingOrigin> implements ShippingOriginService {
 
-@Service("shippingOriginService")
-public class ShippingOriginServiceImpl extends SalesManagerEntityServiceImpl<Long, ShippingOrigin> implements ShippingOriginService {
+    private final ShippingOriginRepository shippingOriginRepository;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingOriginServiceImpl.class);
-	
-	private ShippingOriginRepository shippingOriginRepository;
-
-	
-
-	@Inject
-	public ShippingOriginServiceImpl(ShippingOriginRepository shippingOriginRepository) {
-		super(shippingOriginRepository);
-		this.shippingOriginRepository = shippingOriginRepository;
-	}
+    public ShippingOriginServiceImpl(ShippingOriginRepository shippingOriginRepository) {
+        super(shippingOriginRepository);
+        this.shippingOriginRepository = shippingOriginRepository;
+    }
 
 
-	@Override
-	public ShippingOrigin getByStore(MerchantStore store) {
-		// TODO Auto-generated method stub
-		return shippingOriginRepository.findByStore(store.getId());
-	}
-	
+    @Override
+    public ShippingOrigin getByStore(MerchantStore store) {
+        // TODO Auto-generated method stub
+        return shippingOriginRepository.findByStore(store.getId());
+    }
+
 
 }

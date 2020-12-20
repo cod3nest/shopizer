@@ -46,25 +46,15 @@ import java.util.Map;
 @Controller
 public class TaxRatesController {
 	
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaxRatesController.class);
 	
 	private final static char DECIMALCOUNT = '3';
-
 	
-	@Inject
 	LabelUtils messages;
 	
-	@Inject
 	private CountryService countryService;
-	
-	@Inject
 	private TaxRateService taxRateService;
-	
-	@Inject
 	private TaxClassService taxClassService;
-	
-	@Inject
 	private ZoneService zoneService;
 	
 	@PreAuthorize("hasRole('TAX')")

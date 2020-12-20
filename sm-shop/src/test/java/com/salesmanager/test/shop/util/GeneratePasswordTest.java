@@ -1,9 +1,9 @@
 package com.salesmanager.test.shop.util;
 
 import com.salesmanager.shop.admin.model.userpassword.UserReset;
+import com.salesmanager.shop.application.ShopApplication;
+import com.salesmanager.test.shop.common.ServicesTestSupport;
 import org.junit.Assert;
-import javax.inject.Inject;
-import javax.inject.Named;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -12,11 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.salesmanager.shop.application.ShopApplication;
-import com.salesmanager.test.shop.common.ServicesTestSupport;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import static com.salesmanager.shop.store.controller.customer.facade.CustomerFacadeImpl.USERNAME_LENGTH;
+import static com.salesmanager.shop.store.controller.customer.facade.CustomerFacade.USERNAME_LENGTH;
 
 
 /**

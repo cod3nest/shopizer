@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.StringUtils;
@@ -108,59 +110,31 @@ import com.salesmanager.shop.utils.ImageFilePath;
 import com.salesmanager.shop.utils.LabelUtils;
 import com.salesmanager.shop.utils.LocaleUtils;
 
-@Service("orderFacade")
-public class OrderFacadeImpl implements OrderFacade {
+@Slf4j
+@RequiredArgsConstructor
+@Service
+class OrderFacadeImpl implements OrderFacade {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(OrderFacadeImpl.class);
-
-	@Inject
-	private OrderService orderService;
-	@Inject
-	private ProductService productService;
-	@Inject
-	private ProductAttributeService productAttributeService;
-	@Inject
-	private ShoppingCartService shoppingCartService;
-	@Inject
-	private DigitalProductService digitalProductService;
-	@Inject
-	private ShippingService shippingService;
-	@Inject
-	private CustomerFacade customerFacade;
-	@Inject
-	private PricingService pricingService;
-	@Inject
-	private ShoppingCartFacade shoppingCartFacade;
-	@Inject
-	private ShippingQuoteService shippingQuoteService;
-	@Inject
-	private CoreConfiguration coreConfiguration;
-	@Inject
-	private PaymentService paymentService;
-	@Inject
-	private CountryService countryService;
-	@Inject
-	private ZoneService zoneService;
-
-	@Autowired
-	private PersistableOrderApiPopulator persistableOrderApiPopulator;
-
-	@Autowired
-	private ReadableOrderPopulator readableOrderPopulator;
-
-	@Autowired
-	private CustomerPopulator customerPopulator;
-	
-	@Autowired
-	private TransactionService transactionService;
-
-	@Inject
-	private EmailTemplatesUtils emailTemplatesUtils;
-
-	@Inject
-	private LabelUtils messages;
-
-	@Inject
+	private final OrderService orderService;
+	private final ProductService productService;
+	private final ProductAttributeService productAttributeService;
+	private final ShoppingCartService shoppingCartService;
+	private final DigitalProductService digitalProductService;
+	private final ShippingService shippingService;
+	private final CustomerFacade customerFacade;
+	private final PricingService pricingService;
+	private final ShoppingCartFacade shoppingCartFacade;
+	private final ShippingQuoteService shippingQuoteService;
+	private final CoreConfiguration coreConfiguration;
+	private final PaymentService paymentService;
+	private final CountryService countryService;
+	private final ZoneService zoneService;
+	private final PersistableOrderApiPopulator persistableOrderApiPopulator;
+	private final ReadableOrderPopulator readableOrderPopulator;
+	private final CustomerPopulator customerPopulator;
+	private final TransactionService transactionService;
+	private final EmailTemplatesUtils emailTemplatesUtils;
+	private final LabelUtils messages;
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 

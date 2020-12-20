@@ -30,8 +30,11 @@ import com.salesmanager.shop.populator.customer.ReadableCustomerList;
  *
  *
  */
-public interface CustomerFacade
-{
+public interface CustomerFacade {
+
+	int USERNAME_LENGTH = 6;
+	String RESET_PASSWORD_TPL = "email_template_password_reset_customer.ftl";
+	String ROLE_PREFIX = "ROLE_";// Spring Security 4
 
     /**
      * Method used to fetch customer based on the username and storecode.

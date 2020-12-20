@@ -10,15 +10,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.salesmanager.core.business.exception.ServiceException;
@@ -50,50 +47,37 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.core.model.tax.taxclass.TaxClass;
 
-@Service("productService")
-public class ProductServiceImpl extends SalesManagerEntityServiceImpl<Long, Product> implements ProductService {
+@Slf4j
+@Service
+class ProductServiceImpl extends SalesManagerEntityServiceImpl<Long, Product> implements ProductService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
+	private final ProductRepository productRepository;
+	private final CategoryService categoryService;
+	private final ProductAvailabilityService productAvailabilityService;
+	private final ProductPriceService productPriceService;
+	private final ProductOptionService productOptionService;
+	private final ProductOptionValueService productOptionValueService;
+	private final ProductAttributeService productAttributeService;
+	private final ProductRelationshipService productRelationshipService;
+	private final SearchService searchService;
+	private final ProductImageService productImageService;
+	private final CoreConfiguration configuration;
+	private final ProductReviewService productReviewService;
 
-	ProductRepository productRepository;
-
-	@Inject
-	CategoryService categoryService;
-
-	@Inject
-	ProductAvailabilityService productAvailabilityService;
-
-	@Inject
-	ProductPriceService productPriceService;
-
-	@Inject
-	ProductOptionService productOptionService;
-
-	@Inject
-	ProductOptionValueService productOptionValueService;
-
-	@Inject
-	ProductAttributeService productAttributeService;
-
-	@Inject
-	ProductRelationshipService productRelationshipService;
-
-	@Inject
-	SearchService searchService;
-
-	@Inject
-	ProductImageService productImageService;
-
-	@Inject
-	CoreConfiguration configuration;
-
-	@Inject
-	ProductReviewService productReviewService;
-
-	@Inject
-	public ProductServiceImpl(ProductRepository productRepository) {
+	public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService, ProductAvailabilityService productAvailabilityService, ProductPriceService productPriceService, ProductOptionService productOptionService, ProductOptionValueService productOptionValueService, ProductAttributeService productAttributeService, ProductRelationshipService productRelationshipService, SearchService searchService, ProductImageService productImageService, CoreConfiguration configuration, ProductReviewService productReviewService) {
 		super(productRepository);
 		this.productRepository = productRepository;
+		this.categoryService = categoryService;
+		this.productAvailabilityService = productAvailabilityService;
+		this.productPriceService = productPriceService;
+		this.productOptionService = productOptionService;
+		this.productOptionValueService = productOptionValueService;
+		this.productAttributeService = productAttributeService;
+		this.productRelationshipService = productRelationshipService;
+		this.searchService = searchService;
+		this.productImageService = productImageService;
+		this.configuration = configuration;
+		this.productReviewService = productReviewService;
 	}
 
 	@Override

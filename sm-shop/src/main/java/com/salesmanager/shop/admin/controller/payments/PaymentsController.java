@@ -26,14 +26,9 @@ import java.util.*;
 
 @Controller
 public class PaymentsController {
-	
-	
-	@Inject
-	private PaymentService paymentService;
-	
-	@Inject
-	LabelUtils messages;
 
+	private PaymentService paymentService;
+	private LabelUtils messages;
 	
 	@RequestMapping(value="/admin/payments/paymentMethods.html", method=RequestMethod.GET)
 	public String getPaymentMethods(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -1,23 +1,18 @@
 package com.salesmanager.core.business.services.catalog.product.price;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Service;
-
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.repositories.catalog.product.price.ProductPriceRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
 import com.salesmanager.core.model.catalog.product.price.ProductPrice;
 import com.salesmanager.core.model.catalog.product.price.ProductPriceDescription;
+import org.springframework.stereotype.Service;
 
-@Service("productPrice")
-public class ProductPriceServiceImpl extends SalesManagerEntityServiceImpl<Long, ProductPrice> 
-	implements ProductPriceService {
+import java.util.HashSet;
+import java.util.Set;
 
-	@Inject
+@Service
+class ProductPriceServiceImpl extends SalesManagerEntityServiceImpl<Long, ProductPrice> implements ProductPriceService {
+
 	public ProductPriceServiceImpl(ProductPriceRepository productPriceRepository) {
 		super(productPriceRepository);
 	}

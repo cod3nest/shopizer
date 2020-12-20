@@ -1,13 +1,5 @@
 package com.salesmanager.core.business.services.user;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Service;
-
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.repositories.user.PermissionRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
@@ -15,22 +7,22 @@ import com.salesmanager.core.model.user.Group;
 import com.salesmanager.core.model.user.Permission;
 import com.salesmanager.core.model.user.PermissionCriteria;
 import com.salesmanager.core.model.user.PermissionList;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 
-@Service("permissionService")
-public class PermissionServiceImpl extends
-		SalesManagerEntityServiceImpl<Integer, Permission> implements
-		PermissionService {
+@Service
+class PermissionServiceImpl extends SalesManagerEntityServiceImpl<Integer, Permission> implements PermissionService {
 
-	private PermissionRepository permissionRepository;
+	private final PermissionRepository permissionRepository;
 
-
-	@Inject
 	public PermissionServiceImpl(PermissionRepository permissionRepository) {
 		super(permissionRepository);
 		this.permissionRepository = permissionRepository;
-
 	}
 
 	@Override

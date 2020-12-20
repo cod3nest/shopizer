@@ -31,17 +31,11 @@ import com.salesmanager.shop.utils.DateUtil;
 @Component
 public class PersistableMerchantStorePopulator extends AbstractDataPopulator<PersistableMerchantStore, MerchantStore> {
 
-	@Inject
 	private CountryService countryService;
-	@Inject
 	private ZoneService zoneService;
-	@Inject
 	private LanguageService languageService;
-	@Inject
 	private CurrencyService currencyService;
-	@Inject
 	private MerchantStoreService merchantStoreService;
-	
 	
 	@Override
 	public MerchantStore populate(PersistableMerchantStore source, MerchantStore target, MerchantStore store,

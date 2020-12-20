@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,12 +16,9 @@ import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.model.system.IntegrationModule;
 import com.salesmanager.core.model.system.ModuleConfig;
 
+@Slf4j
 @Component
 public class IntegrationModulesLoader {
-	
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationModulesLoader.class);
-	
 
 	public List<IntegrationModule> loadIntegrationModules(String jsonFilePath) throws Exception {
 		

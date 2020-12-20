@@ -38,16 +38,10 @@ public class ProductReviewController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductReviewController.class);
 	
-	@Inject
 	private ProductService productService;
-	
-	@Inject
 	private ProductReviewService productReviewService;
-	
-	@Inject
 	LabelUtils messages;
-	
-	
+
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/products/reviews.html", method=RequestMethod.GET)
 	public String displayProductReviews(@RequestParam("id") long productId,Model model, HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {

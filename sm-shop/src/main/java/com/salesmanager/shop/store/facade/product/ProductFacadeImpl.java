@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.StringUtils;
@@ -62,38 +64,22 @@ import com.salesmanager.shop.utils.DateUtil;
 import com.salesmanager.shop.utils.ImageFilePath;
 import com.salesmanager.shop.utils.LocaleUtils;
 
-@Service("productFacade")
+@Slf4j
+@RequiredArgsConstructor
+@Service
 @Profile({ "default", "cloud", "gcp", "aws", "mysql" })
-public class ProductFacadeImpl implements ProductFacade {
+class ProductFacadeImpl implements ProductFacade {
 
-	@Inject
-	private CategoryService categoryService;
+	private final CategoryService categoryService;
+	private final LanguageService languageService;
+	private final ProductAttributeService productAttributeService;
+	private final ProductService productService;
+	private final PricingService pricingService;
+	private final CustomerService customerService;
+	private final ProductReviewService productReviewService;
+	private final ProductRelationshipService productRelationshipService;
+	private final PersistableProductPopulator persistableProductPopulator;
 
-	@Inject
-	private LanguageService languageService;
-	
-	@Inject
-	private ProductAttributeService productAttributeService;
-
-	@Inject
-	private ProductService productService;
-
-	@Inject
-	private PricingService pricingService;
-
-	@Inject
-	private CustomerService customerService;
-
-	@Inject
-	private ProductReviewService productReviewService;
-
-	@Inject
-	private ProductRelationshipService productRelationshipService;
-
-	@Inject
-	private PersistableProductPopulator persistableProductPopulator;
-
-	@Inject
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 

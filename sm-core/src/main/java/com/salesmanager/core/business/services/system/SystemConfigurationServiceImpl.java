@@ -1,34 +1,29 @@
 package com.salesmanager.core.business.services.system;
 
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Service;
-
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.repositories.system.SystemConfigurationRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
 import com.salesmanager.core.model.system.SystemConfiguration;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-@Service("systemConfigurationService")
-public class SystemConfigurationServiceImpl extends
-		SalesManagerEntityServiceImpl<Long, SystemConfiguration> implements
-		SystemConfigurationService {
+@Slf4j
+@Service
+class SystemConfigurationServiceImpl extends
+        SalesManagerEntityServiceImpl<Long, SystemConfiguration> implements
+        SystemConfigurationService {
 
-	
-	private SystemConfigurationRepository systemConfigurationReposotory;
-	
-	@Inject
-	public SystemConfigurationServiceImpl(
-			SystemConfigurationRepository systemConfigurationReposotory) {
-			super(systemConfigurationReposotory);
-			this.systemConfigurationReposotory = systemConfigurationReposotory;
-	}
-	
-	public SystemConfiguration getByKey(String key) throws ServiceException {
-		return systemConfigurationReposotory.findByKey(key);
-	}
-	
+    private final SystemConfigurationRepository systemConfigurationReposotory;
 
+    public SystemConfigurationServiceImpl(
+            SystemConfigurationRepository systemConfigurationReposotory) {
+        super(systemConfigurationReposotory);
+        this.systemConfigurationReposotory = systemConfigurationReposotory;
+    }
+
+    public SystemConfiguration getByKey(String key) throws ServiceException {
+        return systemConfigurationReposotory.findByKey(key);
+    }
 
 
 }

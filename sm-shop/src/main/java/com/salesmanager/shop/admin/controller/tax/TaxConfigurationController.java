@@ -24,9 +24,7 @@ import java.util.Map;
 @Controller
 public class TaxConfigurationController {
 	
-	@Inject
 	private TaxService taxService = null;
-	
 	
 	@PreAuthorize("hasRole('TAX')")
 	@RequestMapping(value={"/admin/tax/taxconfiguration/edit.html"}, method=RequestMethod.GET)

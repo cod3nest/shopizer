@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,24 +48,15 @@ import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.model.search.AutoCompleteRequest;
 import com.salesmanager.shop.utils.ImageFilePath;
 
-@Service("searchFacade")
-public class SearchFacadeImpl implements SearchFacade {
+@Slf4j
+@RequiredArgsConstructor
+@Service
+class SearchFacadeImpl implements SearchFacade {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(SearchFacadeImpl.class);
-
-	@Inject
-	private SearchService searchService;
-
-	@Inject
-	private ProductService productService;
-
-	@Inject
-	private CategoryService categoryService;
-
-	@Inject
-	private PricingService pricingService;
-
-	@Inject
+	private final SearchService searchService;
+	private final ProductService productService;
+	private final CategoryService categoryService;
+	private final PricingService pricingService;
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 

@@ -38,10 +38,7 @@ public class DigitalProductController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DigitalProductController.class);
 	
-	@Inject
 	private ProductService productService;
-	
-	@Inject
 	private DigitalProductService digitalProductService;
 	
 	@PreAuthorize("hasRole('PRODUCTS')")

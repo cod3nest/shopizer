@@ -42,25 +42,14 @@ public class ProductAttributeController {
 	
 	private final static String TEXT_OPTION = "text";
 	
-	@Inject
 	private ProductAttributeService productAttributeService;
-	
-	@Inject
 	private ProductService productService;
-	
-	@Inject
 	private ProductPriceUtils priceUtil;
 	
-	@Inject
 	ProductOptionService productOptionService;
-	
-	@Inject
 	ProductOptionValueService productOptionValueService;
-	
-	@Inject
 	LabelUtils messages;
 	
-
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/products/attributes/list.html", method=RequestMethod.GET)
 	public String displayProductAttributes(@RequestParam("id") long productId, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {

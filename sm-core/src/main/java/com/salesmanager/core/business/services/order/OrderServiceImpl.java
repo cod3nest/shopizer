@@ -1,30 +1,5 @@
 package com.salesmanager.core.business.services.order;
 
-import java.io.ByteArrayOutputStream;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.salesmanager.core.business.constants.Constants;
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.modules.order.InvoiceModule;
@@ -65,44 +40,54 @@ import com.salesmanager.core.model.shipping.ShippingConfiguration;
 import com.salesmanager.core.model.shoppingcart.ShoppingCart;
 import com.salesmanager.core.model.shoppingcart.ShoppingCartItem;
 import com.salesmanager.core.model.tax.TaxItem;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.springframework.stereotype.Service;
 
-@Service("orderService")
-public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order> implements OrderService {
+import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
+@Slf4j
+@Service
+class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order> implements OrderService {
 
-    @Inject
-    private InvoiceModule invoiceModule;
-
-    @Inject
-    private ShippingService shippingService;
-    
-    @Inject
-    private PaymentService paymentService;
-    
-    @Inject
-    private ProductService productService;
-
-    @Inject
-    private TaxService taxService;
-    
-    @Inject
-    private CustomerService customerService;
-    
-    @Inject
-    private ShoppingCartService shoppingCartService;
-    
-    @Inject
-    private TransactionService transactionService;
-    
-    @Inject
-    private OrderTotalService orderTotalService;
-
+    private final InvoiceModule invoiceModule;
+    private final ShippingService shippingService;
+    private final PaymentService paymentService;
+    private final ProductService productService;
+    private final TaxService taxService;
+    private final CustomerService customerService;
+    private final ShoppingCartService shoppingCartService;
+    private final TransactionService transactionService;
+    private final OrderTotalService orderTotalService;
     private final OrderRepository orderRepository;
 
-    @Inject
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(InvoiceModule invoiceModule, ShippingService shippingService, PaymentService paymentService, ProductService productService, TaxService taxService, CustomerService customerService, ShoppingCartService shoppingCartService, TransactionService transactionService, OrderTotalService orderTotalService, OrderRepository orderRepository) {
         super(orderRepository);
+        this.invoiceModule = invoiceModule;
+        this.shippingService = shippingService;
+        this.paymentService = paymentService;
+        this.productService = productService;
+        this.taxService = taxService;
+        this.customerService = customerService;
+        this.shoppingCartService = shoppingCartService;
+        this.transactionService = transactionService;
+        this.orderTotalService = orderTotalService;
         this.orderRepository = orderRepository;
     }
 

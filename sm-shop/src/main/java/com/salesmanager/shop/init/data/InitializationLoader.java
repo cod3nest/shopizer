@@ -3,6 +3,8 @@ package com.salesmanager.shop.init.data;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,44 +26,23 @@ import com.salesmanager.core.model.system.SystemConfiguration;
 import com.salesmanager.shop.admin.security.WebUserServices;
 import com.salesmanager.shop.constants.ApplicationConstants;
 
-
+@Slf4j
+@RequiredArgsConstructor
 @Component
 public class InitializationLoader {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(InitializationLoader.class);
-
 	@Value("${db.init.data:true}")
     private boolean initDefaultData;
 
-	
-	@Inject
-	private MerchantConfigurationService merchantConfigurationService;
-	
-	@Inject
-	private InitializationDatabase initializationDatabase;
-	
-	//@Inject
-	//private InitData initData;
-	
-	@Inject
-	private SystemConfigurationService systemConfigurationService;
-	
-	@Inject
-	private WebUserServices userDetailsService;
+	private final MerchantConfigurationService merchantConfigurationService;
+	private final InitializationDatabase initializationDatabase;
+	private final SystemConfigurationService systemConfigurationService;
+	private final WebUserServices userDetailsService;
+	protected final PermissionService  permissionService;
+	protected final GroupService   groupService;
+	private final CoreConfiguration configuration;
+	protected final MerchantStoreService merchantService;
 
-	@Inject
-	protected PermissionService  permissionService;
-	
-	@Inject
-	protected GroupService   groupService;
-	
-	@Inject
-	private CoreConfiguration configuration;
-	
-	@Inject
-	protected MerchantStoreService merchantService;
-
-	
 	@PostConstruct
 	public void init() {
 		

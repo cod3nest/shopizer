@@ -32,11 +32,7 @@ public class AdminProductDownloadUrlTag extends RequestContextAwareTag {
 
 	private DigitalProduct digitalProduct;
 	
-	@Inject
 	private FilePathUtils filePathUtils;
-
-
-
 
 	public DigitalProduct getDigitalProduct() {
 		return digitalProduct;

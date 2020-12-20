@@ -3,6 +3,8 @@ package com.salesmanager.shop.store.facade.product;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,17 +23,14 @@ import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.controller.product.facade.ProductOptionSetFacade;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
-public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
+class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 	
-	@Autowired
-	private PersistableProductOptionSetMapper persistableProductOptionSetMapper;
-	
-	@Autowired
-	private ReadableProductOptionSetMapper readableProductOptionSetMapper;
-	
-	@Autowired
-	private ProductOptionSetService productOptionSetService;
+	private final PersistableProductOptionSetMapper persistableProductOptionSetMapper;
+	private final ReadableProductOptionSetMapper readableProductOptionSetMapper;
+	private final ProductOptionSetService productOptionSetService;
 
 	@Override
 	public ReadableProductOptionSet get(Long id, MerchantStore store, Language language) {

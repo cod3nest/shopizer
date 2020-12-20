@@ -33,13 +33,8 @@ import com.salesmanager.core.model.content.OutputContentFile;
 public class ImagesController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImagesController.class);
-	
 
-	
-	@Inject
 	private ContentService contentService;
-	
-	@Inject
 	private ProductImageService productImageService;
 	
 	private byte[] tempImage = null;

@@ -47,22 +47,11 @@ public class GroupsController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(GroupsController.class);
 
-	@Inject
 	LanguageService languageService;
-
-	@Inject
 	protected GroupService groupService;
-	
-	@Inject
 	PermissionService permissionService;
-
-	@Inject
 	CountryService countryService;
-
-	@Inject
 	LabelUtils messages;
-
-
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/admin/groups/editGroup.html", method = RequestMethod.GET)

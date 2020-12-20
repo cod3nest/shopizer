@@ -2,7 +2,6 @@ package com.salesmanager.core.business.services.catalog.product.file;
 
 import java.util.Optional;
 
-import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import com.salesmanager.core.business.exception.ServiceException;
@@ -16,23 +15,18 @@ import com.salesmanager.core.model.content.FileContentType;
 import com.salesmanager.core.model.content.InputContentFile;
 import com.salesmanager.core.model.merchant.MerchantStore;
 
-@Service("digitalProductService")
-public class DigitalProductServiceImpl extends SalesManagerEntityServiceImpl<Long, DigitalProduct> 
-	implements DigitalProductService {
-	
+@Service
+class DigitalProductServiceImpl extends SalesManagerEntityServiceImpl<Long, DigitalProduct> implements DigitalProductService {
 
-	private DigitalProductRepository digitalProductRepository;
-	
-    @Inject
-    StaticContentFileManager productDownloadsFileManager;
-    
-    @Inject
-    ProductService productService;
+	private final DigitalProductRepository digitalProductRepository;
+	private final StaticContentFileManager productDownloadsFileManager;
+	private final ProductService productService;
 
-	@Inject
-	public DigitalProductServiceImpl(DigitalProductRepository digitalProductRepository) {
+	public DigitalProductServiceImpl(DigitalProductRepository digitalProductRepository, StaticContentFileManager productDownloadsFileManager, ProductService productService) {
 		super(digitalProductRepository);
 		this.digitalProductRepository = digitalProductRepository;
+		this.productDownloadsFileManager = productDownloadsFileManager;
+		this.productService = productService;
 	}
 	
 	@Override

@@ -12,14 +12,13 @@ import com.salesmanager.core.model.system.MerchantConfig;
 import com.salesmanager.core.model.system.MerchantConfiguration;
 import com.salesmanager.core.model.system.MerchantConfigurationType;
 
-@Service("merchantConfigurationService")
-public class MerchantConfigurationServiceImpl extends
+@Service
+class MerchantConfigurationServiceImpl extends
 		SalesManagerEntityServiceImpl<Long, MerchantConfiguration> implements
 		MerchantConfigurationService {
 
-	private MerchantConfigurationRepository merchantConfigurationRepository;
+	private final MerchantConfigurationRepository merchantConfigurationRepository;
 	
-	@Inject
 	public MerchantConfigurationServiceImpl(
 			MerchantConfigurationRepository merchantConfigurationRepository) {
 			super(merchantConfigurationRepository);

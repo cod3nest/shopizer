@@ -56,38 +56,17 @@ import java.util.*;
 
 @Controller
 public class ProductController {
-	
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
-	
 
-	
-	@Inject
 	private ProductService productService;
-	
-	@Inject
 	private ManufacturerService manufacturerService;
-	
-	@Inject
 	private ProductTypeService productTypeService;
-	
-	@Inject
 	private ProductImageService productImageService;
-	
-	@Inject
 	private TaxClassService taxClassService;
-	
-	@Inject
 	private ProductPriceUtils priceUtil;
-
-	@Inject
-	LabelUtils messages;
-	
-	@Inject
+	private LabelUtils messages;
 	private CoreConfiguration configuration;
-	
-	@Inject
-	CategoryService categoryService;
+	private CategoryService categoryService;
 
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/products/editProduct.html", method=RequestMethod.GET)

@@ -43,16 +43,9 @@ public class ProductPriceController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductPriceController.class);
 	
-	@Inject
 	private ProductService productService;
-	
-	@Inject
 	private ProductPriceService productPriceService;
-	
-	@Inject
 	private ProductPriceUtils priceUtil;
-	
-	@Inject
 	LabelUtils messages;
 	
 	@PreAuthorize("hasRole('PRODUCTS')")

@@ -32,14 +32,9 @@ import com.salesmanager.shop.utils.LabelUtils;
 public class ShippingPackagingController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingPackagingController.class);
-	
 
-	@Inject
 	private ShippingService shippingService;
-	
-	@Inject
-	LabelUtils messages;
-	
+	private LabelUtils messages;
 
 	/**
 	 * Displays shipping packaging

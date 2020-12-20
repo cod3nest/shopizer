@@ -9,13 +9,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javax.inject.Inject;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
-public class CurrencyFacadeImpl implements CurrencyFacade {
+class CurrencyFacadeImpl implements CurrencyFacade {
 
-  @Inject
-  private CurrencyService currencyService;
+  private final CurrencyService currencyService;
 
   @Override
   public List<Currency> getList() {

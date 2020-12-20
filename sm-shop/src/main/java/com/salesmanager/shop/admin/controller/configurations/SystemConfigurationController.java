@@ -31,11 +31,8 @@ import com.salesmanager.shop.constants.Constants;
 public class SystemConfigurationController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SystemConfigurationController.class);
-	
-	@Inject
-	private MerchantConfigurationService merchantConfigurationService;
 
-	@Inject
+	private MerchantConfigurationService merchantConfigurationService;
 	Environment env;
 	
 

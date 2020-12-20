@@ -29,23 +29,11 @@ public class ShopProductPriceFormatTag extends RequestContextAwareTag  {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShopProductPriceFormatTag.class);
 
-	@Inject
 	private PricingService pricingService;
-	
-	@Inject
 	private ProductPriceUtils productPriceUtils;
 	
-	
-	
 	private BigDecimal value;
-	
-
-
 	private Currency currency;
-
-
-	
-
 
 	public Currency getCurrency() {
 		return currency;

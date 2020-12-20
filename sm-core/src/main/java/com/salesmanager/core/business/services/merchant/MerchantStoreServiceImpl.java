@@ -1,19 +1,5 @@
 package com.salesmanager.core.business.services.merchant;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.inject.Inject;
-
-import org.jsoup.helper.Validate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.repositories.merchant.MerchantRepository;
 import com.salesmanager.core.business.repositories.merchant.PageableMerchantRepository;
@@ -22,22 +8,29 @@ import com.salesmanager.core.business.services.common.generic.SalesManagerEntity
 import com.salesmanager.core.model.common.GenericEntityList;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.merchant.MerchantStoreCriteria;
+import org.jsoup.helper.Validate;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
-@Service("merchantService")
-public class MerchantStoreServiceImpl extends SalesManagerEntityServiceImpl<Integer, MerchantStore>
+import java.util.List;
+import java.util.Optional;
+
+@Service
+class MerchantStoreServiceImpl extends SalesManagerEntityServiceImpl<Integer, MerchantStore>
 		implements MerchantStoreService {
 
-	@Inject
-	protected ProductTypeService productTypeService;
+	protected final ProductTypeService productTypeService;
+	private final PageableMerchantRepository pageableMerchantRepository;
+	private final MerchantRepository merchantRepository;
 
-	@Autowired
-	private PageableMerchantRepository pageableMerchantRepository;
-
-	private MerchantRepository merchantRepository;
-
-	@Inject
-	public MerchantStoreServiceImpl(MerchantRepository merchantRepository) {
+	public MerchantStoreServiceImpl(ProductTypeService productTypeService, PageableMerchantRepository pageableMerchantRepository, MerchantRepository merchantRepository) {
 		super(merchantRepository);
+		this.productTypeService = productTypeService;
+		this.pageableMerchantRepository = pageableMerchantRepository;
 		this.merchantRepository = merchantRepository;
 	}
 

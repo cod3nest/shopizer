@@ -1,4 +1,5 @@
 # Ignored files
+*.db
 *.class
 *.jar
 *.lst
@@ -9,6 +10,8 @@
 */target/*
 .idea/workspace.xml
 *.class
+*/files/**
+/files/**
 /bin/
 /WebContent/
 sm-shop/SALESMANAGER.lock.db

@@ -58,6 +58,10 @@
       <groupId>com.shopizer</groupId>
       <artifactId>sm-core-model</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

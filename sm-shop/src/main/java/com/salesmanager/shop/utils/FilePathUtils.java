@@ -38,9 +38,8 @@ public class FilePathUtils {
 	private static final String CONTEXT_PATH = "CONTEXT_PATH";
 	private static final String HTTP_VALUE = "http";
 
-	@Inject private CoreConfiguration coreConfiguration;
+	private CoreConfiguration coreConfiguration;
 
-	@Inject
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 

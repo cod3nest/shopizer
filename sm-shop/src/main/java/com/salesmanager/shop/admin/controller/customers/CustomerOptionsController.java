@@ -33,14 +33,9 @@ import java.util.*;
 
 @Controller
 public class CustomerOptionsController {
-	
-	@Inject
+
 	private LanguageService languageService;
-	
-	@Inject
 	private CustomerOptionService customerOptionService;
-	
-	@Inject
 	private LabelUtils messages;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerOptionsController.class);

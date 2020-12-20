@@ -42,16 +42,9 @@ public class CustomProductGroupsController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomProductGroupsController.class);
 	
-	@Inject
 	CategoryService categoryService;
-	
-	@Inject
 	ProductService productService;
-	
-	@Inject
 	ProductRelationshipService productRelationshipService;
-	
-	@Inject
 	LabelUtils messages;
 	
 	@PreAuthorize("hasRole('PRODUCTS')")

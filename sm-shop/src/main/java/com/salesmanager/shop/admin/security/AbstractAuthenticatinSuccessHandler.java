@@ -22,9 +22,7 @@ public abstract class AbstractAuthenticatinSuccessHandler extends SavedRequestAw
 	abstract protected void redirectAfterSuccess(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAuthenticatinSuccessHandler.class);
-	
-	
-	@Inject
+
 	private UserService userService;
 	
 	    @Override

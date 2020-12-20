@@ -1,18 +1,5 @@
 package com.salesmanager.core.business.modules.cms.product;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.FileNameMap;
-import java.net.URLConnection;
-import java.util.List;
-import javax.imageio.ImageIO;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.salesmanager.core.business.constants.Constants;
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.utils.CoreConfiguration;
@@ -24,12 +11,27 @@ import com.salesmanager.core.model.catalog.product.image.ProductImage;
 import com.salesmanager.core.model.content.FileContentType;
 import com.salesmanager.core.model.content.ImageContentFile;
 import com.salesmanager.core.model.content.OutputContentFile;
+import lombok.Data;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.FileNameMap;
+import java.net.URLConnection;
+import java.util.List;
 
+@Data
+@Slf4j
 public class ProductFileManagerImpl extends ProductFileManager {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(ProductFileManagerImpl.class);
-
 
   private ProductImagePut uploadImage;
   private ProductImageGet getImage;
@@ -40,27 +42,6 @@ public class ProductFileManagerImpl extends ProductFileManager {
   private final static String PRODUCT_IMAGE_HEIGHT_SIZE = "PRODUCT_IMAGE_HEIGHT_SIZE";
   private final static String PRODUCT_IMAGE_WIDTH_SIZE = "PRODUCT_IMAGE_WIDTH_SIZE";
   private final static String CROP_UPLOADED_IMAGES = "CROP_UPLOADED_IMAGES";
-
-
-  public CoreConfiguration getConfiguration() {
-    return configuration;
-  }
-
-
-  public void setConfiguration(CoreConfiguration configuration) {
-    this.configuration = configuration;
-  }
-
-
-  public ProductImageRemove getRemoveImage() {
-    return removeImage;
-  }
-
-
-  public void setRemoveImage(ProductImageRemove removeImage) {
-    this.removeImage = removeImage;
-  }
-
 
   public void addProductImage(ProductImage productImage, ImageContentFile contentImage)
       throws ServiceException {
@@ -321,42 +302,15 @@ public class ProductFileManagerImpl extends ProductFileManager {
 
   }
 
-
-  public ProductImagePut getUploadImage() {
-    return uploadImage;
-  }
-
-
-  public void setUploadImage(ProductImagePut uploadImage) {
-    this.uploadImage = uploadImage;
-  }
-
-
-
-  public ProductImageGet getGetImage() {
-    return getImage;
-  }
-
-
-  public void setGetImage(ProductImageGet getImage) {
-    this.getImage = getImage;
-  }
-
-
   @Override
   public OutputContentFile getProductImage(String merchantStoreCode, String productCode,
       String imageName) throws ServiceException {
     return getImage.getProductImage(merchantStoreCode, productCode, imageName);
   }
 
-
-
   @Override
   public OutputContentFile getProductImage(String merchantStoreCode, String productCode,
       String imageName, ProductImageSize size) throws ServiceException {
     return getImage.getProductImage(merchantStoreCode, productCode, imageName, size);
   }
-
-
-
 }

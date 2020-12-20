@@ -42,16 +42,9 @@ public class CategoryController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
-    @Inject
     LanguageService languageService;
-
-    @Inject
     CategoryService categoryService;
-
-    @Inject
     CountryService countryService;
-
-    @Inject
     LabelUtils messages;
 
     @PreAuthorize("hasRole('PRODUCTS')")

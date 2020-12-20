@@ -1,5 +1,19 @@
 package com.salesmanager.core.business.services.reference.loader;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.salesmanager.core.business.exception.ServiceException;
+import com.salesmanager.core.business.services.reference.country.CountryService;
+import com.salesmanager.core.business.services.reference.language.LanguageService;
+import com.salesmanager.core.model.reference.country.Country;
+import com.salesmanager.core.model.reference.language.Language;
+import com.salesmanager.core.model.reference.zone.Zone;
+import com.salesmanager.core.model.reference.zone.ZoneDescription;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -9,24 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.salesmanager.core.business.exception.ServiceException;
-import com.salesmanager.core.business.services.reference.country.CountryService;
-import com.salesmanager.core.business.services.reference.language.LanguageService;
-import com.salesmanager.core.model.reference.country.Country;
-import com.salesmanager.core.model.reference.language.Language;
-import com.salesmanager.core.model.reference.zone.Zone;
-import com.salesmanager.core.model.reference.zone.ZoneDescription;
-
 /**
  * Drop files in reference/zones with following format
  * 
@@ -35,23 +31,17 @@ import com.salesmanager.core.model.reference.zone.ZoneDescription;
  * @author carlsamson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Component
 public class ZonesLoader {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ZonesLoader.class);
-
-	@Inject
-	private LanguageService languageService;
-
-	@Inject
-	private CountryService countryService;
-	
-	@Autowired
-	private ResourcePatternResolver resourceResolver;
-
 	private static final String PATH = "classpath:/reference/zones/*.json";
-
 	private static final String ALL_REGIONS = "*";
+
+	private final LanguageService languageService;
+	private final CountryService countryService;
+	private final ResourcePatternResolver resourceResolver;
 
 	//
 	@SuppressWarnings({ "rawtypes", "unchecked" })

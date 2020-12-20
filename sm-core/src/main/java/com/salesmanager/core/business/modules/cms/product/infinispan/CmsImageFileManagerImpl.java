@@ -1,23 +1,7 @@
 package com.salesmanager.core.business.modules.cms.product.infinispan;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.FileNameMap;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import javax.annotation.PostConstruct;
-import org.apache.commons.io.IOUtils;
-import org.infinispan.tree.Fqn;
-import org.infinispan.tree.Node;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.salesmanager.core.business.constants.Constants;
 import com.salesmanager.core.business.exception.ServiceException;
-import com.salesmanager.core.business.modules.cms.impl.CMSManager;
 import com.salesmanager.core.business.modules.cms.impl.CacheManager;
 import com.salesmanager.core.business.modules.cms.product.ProductAssetsManager;
 import com.salesmanager.core.model.catalog.product.Product;
@@ -27,6 +11,21 @@ import com.salesmanager.core.model.content.FileContentType;
 import com.salesmanager.core.model.content.ImageContentFile;
 import com.salesmanager.core.model.content.OutputContentFile;
 import com.salesmanager.core.model.merchant.MerchantStore;
+import org.apache.commons.io.IOUtils;
+import org.infinispan.tree.Fqn;
+import org.infinispan.tree.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.FileNameMap;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Manager for storing in retrieving image files from the CMS This is a layer on top of Infinispan

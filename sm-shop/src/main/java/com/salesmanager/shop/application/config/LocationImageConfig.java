@@ -1,42 +1,36 @@
 package com.salesmanager.shop.application.config;
 
-import org.drools.core.util.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
+import com.salesmanager.shop.application.config.properties.CmsProperties;
 import com.salesmanager.shop.utils.CloudFilePathUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
 import com.salesmanager.shop.utils.LocalImageFilePathUtils;
+import lombok.RequiredArgsConstructor;
+import org.drools.core.util.StringUtils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@RequiredArgsConstructor
 @Configuration
 public class LocationImageConfig {
-	
-  @Value("${config.cms.contentUrl}")
-  private String contentUrl;
-  
-  @Value("${config.cms.method}")
-  private String method;
-  
-  @Value("${config.cms.static.path}")
-  private String staticPath;
 
-  @Bean
-  public ImageFilePath img() {
-	  
-	if(!StringUtils.isEmpty(method) && !method.equals("default")) {
-	    CloudFilePathUtils cloudFilePathUtils = new CloudFilePathUtils();
-	    cloudFilePathUtils.setBasePath(contentUrl);
-	    return cloudFilePathUtils;
+    private final CmsProperties cmsProperties;
 
-	} else {
-	    LocalImageFilePathUtils localImageFilePathUtils = new LocalImageFilePathUtils();
-	    localImageFilePathUtils.setBasePath(staticPath);
-	    return localImageFilePathUtils;
-	}
-	  
+    @Bean
+    public ImageFilePath img() {
 
-  }
-  
-  
+        if (!StringUtils.isEmpty(cmsProperties.getMethod()) && !cmsProperties.getMethod().equals("default")) {
+            CloudFilePathUtils cloudFilePathUtils = new CloudFilePathUtils();
+            cloudFilePathUtils.setBasePath(cmsProperties.getContentUrl());
+            return cloudFilePathUtils;
+
+        } else {
+            LocalImageFilePathUtils localImageFilePathUtils = new LocalImageFilePathUtils();
+            localImageFilePathUtils.setBasePath(cmsProperties.getStaticPath());
+            return localImageFilePathUtils;
+        }
+
+
+    }
+
+
 }

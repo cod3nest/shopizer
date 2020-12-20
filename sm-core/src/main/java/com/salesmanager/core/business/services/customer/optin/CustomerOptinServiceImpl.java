@@ -15,13 +15,10 @@ import com.salesmanager.core.model.system.optin.CustomerOptin;
 
 
 @Service
-public class CustomerOptinServiceImpl extends SalesManagerEntityServiceImpl<Long, CustomerOptin> implements CustomerOptinService {
+class CustomerOptinServiceImpl extends SalesManagerEntityServiceImpl<Long, CustomerOptin> implements CustomerOptinService {
+
+	private final CustomerOptinRepository customerOptinRepository;
 	
-	
-	private CustomerOptinRepository customerOptinRepository;
-	
-	
-	@Inject
 	public CustomerOptinServiceImpl(CustomerOptinRepository customerOptinRepository) {
 		super(customerOptinRepository);
 		this.customerOptinRepository = customerOptinRepository;

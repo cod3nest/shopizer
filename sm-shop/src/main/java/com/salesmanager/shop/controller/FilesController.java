@@ -23,12 +23,8 @@ import java.io.IOException;
 public class FilesController extends AbstractController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(FilesController.class);
-	
 
-	
-	@Inject
 	private ContentService contentService;
-	
 
 	/**
 	 * Serves static files (css, js ...) the repository is a single node by merchant

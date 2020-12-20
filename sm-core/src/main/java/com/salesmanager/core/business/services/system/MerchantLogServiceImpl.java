@@ -1,38 +1,22 @@
 package com.salesmanager.core.business.services.system;
 
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.salesmanager.core.business.repositories.system.MerchantLogRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
 import com.salesmanager.core.model.system.MerchantLog;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-@Service("merchantLogService")
-public class MerchantLogServiceImpl extends
-		SalesManagerEntityServiceImpl<Long, MerchantLog> implements
-		MerchantLogService {
-	
-	@SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory.getLogger(MerchantLogServiceImpl.class);
+@Slf4j
+@Service
+class MerchantLogServiceImpl extends
+        SalesManagerEntityServiceImpl<Long, MerchantLog> implements
+        MerchantLogService {
 
+    private final MerchantLogRepository merchantLogRepository;
 
-	
-	private MerchantLogRepository merchantLogRepository;
-	
-	@Inject
-	public MerchantLogServiceImpl(
-			MerchantLogRepository merchantLogRepository) {
-			super(merchantLogRepository);
-			this.merchantLogRepository = merchantLogRepository;
-	}
-
-
-	
-
-
-
-
+    public MerchantLogServiceImpl(
+            MerchantLogRepository merchantLogRepository) {
+        super(merchantLogRepository);
+        this.merchantLogRepository = merchantLogRepository;
+    }
 }

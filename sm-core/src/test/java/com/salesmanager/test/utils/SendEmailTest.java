@@ -20,7 +20,6 @@ import com.salesmanager.test.configuration.ConfigurationTest;
 @Ignore
 public class SendEmailTest extends AbstractSalesManagerCoreTestCase {
   
-  @Inject
   private EmailService emailService;
   
   @Test

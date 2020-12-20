@@ -22,11 +22,8 @@ import com.salesmanager.shop.store.api.exception.ConversionRuntimeException;
 @Component
 public class PersistableProductAttributeMapper implements Mapper<PersistableProductAttribute, ProductAttribute> {
 
-	@Inject
 	private ProductOptionService productOptionService;
-	@Inject
 	private ProductOptionValueService productOptionValueService;
-	@Inject
 	private ProductService productService;
 	
 	@Override

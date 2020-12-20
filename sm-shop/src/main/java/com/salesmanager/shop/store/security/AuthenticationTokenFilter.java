@@ -1,42 +1,35 @@
 package com.salesmanager.shop.store.security;
 
-import java.io.IOException;
-import java.util.Enumeration;
-import javax.inject.Inject;
+import com.salesmanager.core.model.common.UserContext;
+import com.salesmanager.shop.store.security.common.CustomAuthenticationManager;
+import com.salesmanager.shop.utils.GeoLocationUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.filter.OncePerRequestFilter;
+import java.io.IOException;
+import java.util.Enumeration;
 
-import com.salesmanager.core.model.common.UserContext;
-import com.salesmanager.shop.store.security.common.CustomAuthenticationManager;
-import com.salesmanager.shop.utils.GeoLocationUtils;
-
-
+@Slf4j
+@RequiredArgsConstructor
+@Component
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationTokenFilter.class);
-
-    
-    @Value("${authToken.header}")
-    private String tokenHeader;
-    
     private final static String BEARER_TOKEN ="Bearer ";
-    
     private final static String FACEBOOK_TOKEN ="FB ";
 
-    
-    @Inject
-    private CustomAuthenticationManager jwtCustomCustomerAuthenticationManager;
-    
-    @Inject
-    private CustomAuthenticationManager jwtCustomAdminAuthenticationManager;
+    private final CustomAuthenticationManager jwtCustomerAuthenticationManager;
+    private final CustomAuthenticationManager jwtAdminAuthenticationManager;
+
+	@Value("${authToken.header}")
+	private String tokenHeader;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -70,8 +63,8 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 	    	
 	    	try {
 		        if (requestHeader != null && requestHeader.startsWith(BEARER_TOKEN)) {//Bearer
-		        	
-		        	jwtCustomCustomerAuthenticationManager.authenticateRequest(request, response);
+
+					jwtCustomerAuthenticationManager.authenticateRequest(request, response);
 	
 		        } else if(requestHeader != null && requestHeader.startsWith(FACEBOOK_TOKEN)) {
 		        	//Facebook
@@ -98,8 +91,8 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 	    	
 	    	try {
 		        if (requestHeader != null && requestHeader.startsWith(BEARER_TOKEN)) {//Bearer
-		        	
-		        	jwtCustomAdminAuthenticationManager.authenticateRequest(request, response);
+
+					jwtAdminAuthenticationManager.authenticateRequest(request, response);
 	
 		        } else {
 		        	LOGGER.warn("couldn't find any authorization token, will ignore the header, might be a preflight check");

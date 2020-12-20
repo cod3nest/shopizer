@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.salesmanager.core.business.exception.ServiceException;
@@ -17,22 +20,19 @@ import com.salesmanager.core.model.user.PermissionList;
 import com.salesmanager.shop.model.security.ReadablePermission;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 
-@Service("securityFacade")
-public class SecurityFacadeImpl implements SecurityFacade {
+@Slf4j
+@RequiredArgsConstructor
+@Service
+class SecurityFacadeImpl implements SecurityFacade {
   
   //private static final String USER_PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{6,12})";
   private static final String USER_PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z]).{6,12})";
   
   private Pattern userPasswordPattern = Pattern.compile(USER_PASSWORD_PATTERN);
 
-  @Inject
-  private PermissionService permissionService;
-
-  @Inject
-  private GroupService groupService;
-  
-  @Inject
-  private PasswordEncoder passwordEncoder;
+  private final PermissionService permissionService;
+  private final GroupService groupService;
+  private final PasswordEncoder passwordEncoder;
 
   @SuppressWarnings({"rawtypes", "unchecked"})
   @Override

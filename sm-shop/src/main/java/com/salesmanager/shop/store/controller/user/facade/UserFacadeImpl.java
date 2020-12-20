@@ -50,7 +50,7 @@ import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.api.exception.UnauthorizedException;
 import com.salesmanager.shop.store.controller.security.facade.SecurityFacade;
 
-@Service("userFacade")
+@Service
 public class UserFacadeImpl implements UserFacade {
 	
 	private static final String PRIVATE_PATH = "/private/";

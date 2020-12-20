@@ -37,15 +37,10 @@ import java.util.Map;
 
 @Controller
 public class TaxClassController {
-	
-	@Inject
+
 	private TaxClassService taxClassService = null;
-	
-	@Inject
 	private ProductService productService=null;
-	
-	@Inject
-	LabelUtils messages;
+	private LabelUtils messages;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaxClassController.class);
 

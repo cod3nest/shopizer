@@ -11,18 +11,19 @@ import com.salesmanager.shop.model.system.PersistableOptin;
 import com.salesmanager.shop.model.system.ReadableOptin;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import javax.inject.Inject;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
-public class OptinFacadeImpl implements OptinFacade {
+class OptinFacadeImpl implements OptinFacade {
 
-  @Inject
-  private OptinService optinService;
-
-  @Inject
-  private ReadableOptinMapper readableOptinConverter;
-  @Inject
-  private PersistableOptinMapper persistableOptinConverter;
+  private final OptinService optinService;
+  private final ReadableOptinMapper readableOptinConverter;
+  private final PersistableOptinMapper persistableOptinConverter;
 
   @Override
   public ReadableOptin create(

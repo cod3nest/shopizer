@@ -2,6 +2,7 @@ package com.salesmanager.shop.application.config;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -13,11 +14,11 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.utils.LanguageUtils;
 
+@Data
 @Component
 public class LanguageArgumentResolver implements HandlerMethodArgumentResolver {
 
-  @Autowired
-  private LanguageUtils languageUtils;
+  private final LanguageUtils languageUtils;
 
   @Override
   public boolean supportsParameter(MethodParameter parameter) {

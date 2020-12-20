@@ -52,19 +52,11 @@ public class CustomShippingMethodsController {
 
 	public final static String WEIGHT_BASED_SHIPPING_METHOD = "weightBased";
 	
-	@Inject
 	private ShippingService shippingService;
-	
-	@Inject
 	private CountryService countryService;
-	
-	@Inject
 	private ProductPriceUtils priceUtil;
-	
-	@Inject
 	LabelUtils messages;
 	
-
 	@PreAuthorize("hasRole('SHIPPING')")
 	@RequestMapping(value="/admin/shipping/weightBased.html", method=RequestMethod.GET)
 	public String getWeightBasedShippingMethod(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {

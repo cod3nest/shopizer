@@ -40,23 +40,12 @@ import java.util.*;
 public class ProductImagesController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductImagesController.class);
-	
-	
 
-	@Inject
 	private ProductService productService;
-	
-
-	@Inject
 	private ProductImageService productImageService;
-	
-	@Inject
 	private LabelUtils messages;
-	
-	@Inject
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
-	
 
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/products/images/list.html", method=RequestMethod.GET)

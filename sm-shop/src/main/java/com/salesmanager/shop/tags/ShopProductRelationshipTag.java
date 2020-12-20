@@ -38,23 +38,13 @@ public class ShopProductRelationshipTag extends RequestContextAwareTag  {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShopProductRelationshipTag.class);
 
-	@Inject
 	private ProductRelationshipService productRelationshipService;
-	
-	@Inject
 	private PricingService pricingService;
-	
-	@Inject
 	private CacheUtils cache;
-	
-	@Inject
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 	
-	
 	private String groupName;
-
-
 
 	public String getGroupName() {
 		return groupName;

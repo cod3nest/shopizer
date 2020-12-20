@@ -1,46 +1,32 @@
 package com.salesmanager.core.business.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.salesmanager.core.model.merchant.MerchantStore;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.stereotype.Component;
 
-import com.salesmanager.core.model.merchant.MerchantStore;
+import java.util.ArrayList;
+import java.util.List;
 
-@Component("cache")
+@Slf4j
+@RequiredArgsConstructor
+@Component
 public class CacheUtils {
-	
-	
-    @Inject
-    @Qualifier("serviceCache")
-    private Cache cache;
-	
-	
-	public final static String REFERENCE_CACHE = "REF";
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(CacheUtils.class);
 
 	private final static String KEY_DELIMITER = "_";
-	
 
+	private final Cache serviceCache;
 
 	public void putInCache(Object object, String keyName) throws Exception {
-
-		cache.put(keyName, object);
-		
+		serviceCache.put(keyName, object);
 	}
 	
 
 	public Object getFromCache(String keyName) throws Exception {
 
-		ValueWrapper vw = cache.get(keyName);
+		ValueWrapper vw = serviceCache.get(keyName);
 		if(vw!=null) {
 			return vw.get();
 		}
@@ -51,7 +37,7 @@ public class CacheUtils {
 	
 	public List<String> getCacheKeys(MerchantStore store) throws Exception {
 		
-		  net.sf.ehcache.Cache cacheImpl = (net.sf.ehcache.Cache) cache.getNativeCache();
+		  net.sf.ehcache.Cache cacheImpl = (net.sf.ehcache.Cache) serviceCache.getNativeCache();
 		  List<String> returnKeys = new ArrayList<String>();
 		  for (Object key: cacheImpl.getKeys()) {
 		    
@@ -82,11 +68,11 @@ public class CacheUtils {
 	}
 	
 	public void removeFromCache(String keyName) throws Exception {
-		cache.evict(keyName);
+		serviceCache.evict(keyName);
 	}
 	
 	public void removeAllFromCache(MerchantStore store) throws Exception {
-		  net.sf.ehcache.Cache cacheImpl = (net.sf.ehcache.Cache) cache.getNativeCache();
+		  net.sf.ehcache.Cache cacheImpl = (net.sf.ehcache.Cache) serviceCache.getNativeCache();
 		  for (Object key: cacheImpl.getKeys()) {
 				try {
 					String sKey = (String)key;
@@ -95,10 +81,7 @@ public class CacheUtils {
 					int delimiterPosition = sKey.indexOf(KEY_DELIMITER);
 					
 					if(delimiterPosition>0 && Character.isDigit(sKey.charAt(0))) {
-					
-
-						cache.evict(key);
-					
+						serviceCache.evict(key);
 					}
 
 				} catch (Exception e) {

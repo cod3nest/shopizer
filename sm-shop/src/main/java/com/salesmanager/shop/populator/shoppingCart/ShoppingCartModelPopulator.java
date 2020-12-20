@@ -32,10 +32,8 @@ import java.util.Set;
  * @author Umesh A
  */
 
-@Service(value="shoppingCartModelPopulator")
-public class ShoppingCartModelPopulator
-    extends AbstractDataPopulator<ShoppingCartData,ShoppingCart>
-{
+@Service
+class ShoppingCartModelPopulator extends AbstractDataPopulator<ShoppingCartData,ShoppingCart> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ShoppingCartModelPopulator.class);
 

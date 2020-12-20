@@ -2,6 +2,8 @@ package com.salesmanager.core.business.services.catalog.catalog;
 
 import javax.inject.Inject;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,18 +19,16 @@ import com.salesmanager.core.model.catalog.catalog.CatalogCategoryEntry;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
 
-@Service("catalogEntryService")
-public class CatalogEntryServiceImpl extends SalesManagerEntityServiceImpl<Long, CatalogCategoryEntry> 
-implements CatalogEntryService {
+@Slf4j
+@Service
+class CatalogEntryServiceImpl extends SalesManagerEntityServiceImpl<Long, CatalogCategoryEntry> implements CatalogEntryService {
 	
-	@Autowired
-	private PageableCatalogEntryRepository pageableCatalogEntryRepository;
+	private final PageableCatalogEntryRepository pageableCatalogEntryRepository;
+	private final CatalogEntryRepository catalogEntryRepository;
 
-	private CatalogEntryRepository catalogEntryRepository;
-	
-	@Inject
-	public CatalogEntryServiceImpl(CatalogEntryRepository repository) {
+	public CatalogEntryServiceImpl(PageableCatalogEntryRepository pageableCatalogEntryRepository, CatalogEntryRepository repository) {
 		super(repository);
+		this.pageableCatalogEntryRepository = pageableCatalogEntryRepository;
 		this.catalogEntryRepository = repository;
 	}
 

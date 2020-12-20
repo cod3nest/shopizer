@@ -26,10 +26,7 @@ import com.salesmanager.shop.constants.Constants;
 @Controller
 public class AdminController {
 	
-	@Inject
 	CountryService countryService;
-	
-	@Inject
 	UserService userService;
 	
 	@PreAuthorize("hasRole('AUTH')")

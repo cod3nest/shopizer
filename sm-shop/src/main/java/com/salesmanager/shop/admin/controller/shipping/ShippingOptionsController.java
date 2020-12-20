@@ -35,15 +35,9 @@ import com.salesmanager.shop.utils.LabelUtils;
 public class ShippingOptionsController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingOptionsController.class);
-	
 
-	@Inject
 	private ShippingService shippingService;
-	
-	@Inject
-	LabelUtils messages;
-	
-	@Inject
+	private LabelUtils messages;
 	private ProductPriceUtils priceUtil;
 	
 	/**

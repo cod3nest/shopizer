@@ -12,12 +12,10 @@ import com.salesmanager.core.model.system.optin.Optin;
 import com.salesmanager.core.model.system.optin.OptinType;
 
 @Service
-public class OptinServiceImpl extends SalesManagerEntityServiceImpl<Long, Optin> implements OptinService {
+class OptinServiceImpl extends SalesManagerEntityServiceImpl<Long, Optin> implements OptinService {
+
+	private final OptinRepository optinRepository;
 	
-	
-	private OptinRepository optinRepository;
-	
-	@Inject
 	public OptinServiceImpl(OptinRepository optinRepository) {
 		super(optinRepository);
 		this.optinRepository = optinRepository;

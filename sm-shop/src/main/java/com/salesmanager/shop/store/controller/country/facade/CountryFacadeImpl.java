@@ -10,39 +10,42 @@ import com.salesmanager.shop.model.references.ReadableCountry;
 import com.salesmanager.shop.populator.references.ReadableCountryPopulator;
 import com.salesmanager.shop.store.api.exception.ConversionRuntimeException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
+@RequiredArgsConstructor
 @Service
-public class CountryFacadeImpl implements CountryFacade {
+class CountryFacadeImpl implements CountryFacade {
 
-  @Inject
-  private CountryService countryService;
+    private final CountryService countryService;
 
-  @Override
-  public List<ReadableCountry> getListCountryZones(Language language, MerchantStore merchantStore) {
-    return getListOfCountryZones(language)
-        .stream()
-        .map(country -> convertToReadableCountry(country, language, merchantStore))
-        .collect(Collectors.toList());
-  }
-
-  private ReadableCountry convertToReadableCountry(Country country, Language language, MerchantStore merchantStore) {
-    try{
-      ReadableCountryPopulator populator = new ReadableCountryPopulator();
-      return populator.populate(country, new ReadableCountry(), merchantStore, language);
-    } catch (ConversionException e) {
-      throw new ConversionRuntimeException(e);
+    @Override
+    public List<ReadableCountry> getListCountryZones(Language language, MerchantStore merchantStore) {
+        return getListOfCountryZones(language)
+                .stream()
+                .map(country -> convertToReadableCountry(country, language, merchantStore))
+                .collect(Collectors.toList());
     }
-  }
 
-  private List<Country> getListOfCountryZones(Language language) {
-    try{
-      return countryService.listCountryZones(language);
-    } catch (ServiceException e) {
-      throw new ServiceRuntimeException(e);
+    private ReadableCountry convertToReadableCountry(Country country, Language language, MerchantStore merchantStore) {
+        try {
+            ReadableCountryPopulator populator = new ReadableCountryPopulator();
+            return populator.populate(country, new ReadableCountry(), merchantStore, language);
+        } catch (ConversionException e) {
+            throw new ConversionRuntimeException(e);
+        }
     }
-  }
+
+    private List<Country> getListOfCountryZones(Language language) {
+        try {
+            return countryService.listCountryZones(language);
+        } catch (ServiceException e) {
+            throw new ServiceRuntimeException(e);
+        }
+    }
 }

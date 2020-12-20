@@ -42,33 +42,15 @@ import com.salesmanager.shop.utils.LanguageUtils;
 @RequestMapping("/services")
 public class ProductItemsRESTController {
 	
-	@Inject
 	private MerchantStoreService merchantStoreService;
-
-	
-	@Inject
 	private ProductItemsFacade productItemsFacade;
-
-	
-	@Inject
 	private LanguageService languageService;
-	
-	@Inject
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
-	
-	@Inject
 	private LanguageUtils languageUtils;
-	
-	@Inject
 	private ProductRelationshipService productRelationshipService;
 	
-
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductItemsRESTController.class);
-	
-	
-	
 
 	/**
 	 * Items for manufacturer

@@ -30,24 +30,13 @@ import com.salesmanager.test.configuration.ConfigurationTest;
 @Ignore
 public class UtilsTestCase  {
 	
-	
-	@Inject
 	private CountryService countryService;
-	
-	@Inject
 	private CurrencyService currencyService;
-	
-	@Inject
 	private Encryption encryption;
-	
-	@Inject
 	private CacheUtils cache;
-	
-	@Inject
 	private GeoLocation geoLoaction;
 	
 
-	
 	//@Test
 	@Ignore
 	public void testCache() throws Exception {

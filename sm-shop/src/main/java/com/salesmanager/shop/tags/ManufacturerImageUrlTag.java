@@ -34,11 +34,7 @@ public class ManufacturerImageUrlTag extends RequestContextAwareTag {
 	private String imageType;
 	private Manufacturer manufacturer;
 	
-	@Inject
 	private FilePathUtils filePathUtils;
-
-
-	@Inject
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 

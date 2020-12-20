@@ -1,16 +1,5 @@
 package com.salesmanager.core.business.services.reference.init;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import javax.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.services.catalog.product.manufacturer.ManufacturerService;
 import com.salesmanager.core.business.services.catalog.product.type.ProductTypeService;
@@ -45,54 +34,37 @@ import com.salesmanager.core.model.tax.taxclass.TaxClass;
 import com.salesmanager.core.model.user.Group;
 import com.salesmanager.core.model.user.GroupType;
 import com.salesmanager.core.model.user.Permission;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service("initializationDatabase")
-public class InitializationDatabaseImpl implements InitializationDatabase {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(InitializationDatabaseImpl.class);
-	
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-	@Inject
-	private ZoneService zoneService;
+@Slf4j
+@RequiredArgsConstructor
+@Service
+class InitializationDatabaseImpl implements InitializationDatabase {
 	
-	@Inject
-	private LanguageService languageService;
-	
-	@Inject
-	private CountryService countryService;
-	
-	@Inject
-	private CurrencyService currencyService;
-	
-	@Inject
-	protected MerchantStoreService merchantService;
-		
-	@Inject
-	protected ProductTypeService productTypeService;
-	
-	@Inject
-	private TaxClassService taxClassService;
-	
-	@Inject
-	private ZonesLoader zonesLoader;
-	
-	@Inject
-	private IntegrationModulesLoader modulesLoader;
-	
-	@Inject
-	private ManufacturerService manufacturerService;
-	
-	@Inject
-	private ModuleConfigurationService moduleConfigurationService;
-	
-	@Inject
-	private OptinService optinService;
-	
-	@Inject
-	protected GroupService   groupService;
-	
-	@Inject
-	protected PermissionService   permissionService;
+	private final ZoneService zoneService;
+	private final LanguageService languageService;
+	private final CountryService countryService;
+	private final CurrencyService currencyService;
+	protected final MerchantStoreService merchantService;
+	protected final ProductTypeService productTypeService;
+	private final TaxClassService taxClassService;
+	private final ZonesLoader zonesLoader;
+	private final IntegrationModulesLoader modulesLoader;
+	private final ManufacturerService manufacturerService;
+	private final ModuleConfigurationService moduleConfigurationService;
+	private final OptinService optinService;
+	protected final GroupService   groupService;
+	protected final PermissionService   permissionService;
 
 	private String name;
 	

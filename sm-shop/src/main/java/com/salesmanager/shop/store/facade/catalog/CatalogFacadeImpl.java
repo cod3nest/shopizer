@@ -20,6 +20,8 @@ import com.salesmanager.shop.store.api.exception.OperationNotAllowedException;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.controller.catalog.facade.CatalogFacade;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.helper.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,27 +34,17 @@ import java.util.stream.Collectors;
 
 import static com.salesmanager.shop.util.ReadableEntityUtil.createReadableList;
 
-@Service("catalogFacade")
-public class CatalogFacadeImpl implements CatalogFacade {
+@Slf4j
+@RequiredArgsConstructor
+@Service
+class CatalogFacadeImpl implements CatalogFacade {
 
-
-    @Autowired
-    private CatalogService catalogService;
-
-    @Autowired
-    private CatalogEntryService catalogEntryService;
-
-    @Autowired
-    private PersistableCatalogMapper persistableCatalogMapper;
-
-    @Autowired
-    private ReadableCatalogMapper readableCatalogMapper;
-
-    @Autowired
-    private Mapper<PersistableCatalogCategoryEntry, CatalogCategoryEntry> persistableCatalogEntryMapper;
-
-    @Autowired
-    private ReadableCatalogCategoryEntryMapper readableCatalogEntryMapper;
+    private final CatalogService catalogService;
+    private final CatalogEntryService catalogEntryService;
+    private final PersistableCatalogMapper persistableCatalogMapper;
+    private final ReadableCatalogMapper readableCatalogMapper;
+    private final Mapper<PersistableCatalogCategoryEntry, CatalogCategoryEntry> persistableCatalogEntryMapper;
+    private final ReadableCatalogCategoryEntryMapper readableCatalogEntryMapper;
 
 
     @Override
