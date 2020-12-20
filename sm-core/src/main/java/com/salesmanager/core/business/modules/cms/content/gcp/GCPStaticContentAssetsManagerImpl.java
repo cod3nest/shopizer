@@ -48,7 +48,7 @@ import com.salesmanager.core.model.content.OutputContentFile;
  *
  */
 @Component("gcpContentAssetsManager")
-public class GCPStaticContentAssetsManagerImpl implements ContentAssetsManager {
+class GCPStaticContentAssetsManagerImpl implements ContentAssetsManager {
 
   private static final long serialVersionUID = 1L;
 

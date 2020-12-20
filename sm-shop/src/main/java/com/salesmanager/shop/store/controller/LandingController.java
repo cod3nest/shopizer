@@ -8,6 +8,9 @@ import java.util.Locale;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,37 +44,21 @@ import com.salesmanager.shop.utils.ImageFilePath;
 import com.salesmanager.shop.utils.LabelUtils;
 
 
-
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class LandingController {
 	
-	
 	private final static String LANDING_PAGE = "LANDING_PAGE";
-	
-	
-	@Inject
-	private ContentService contentService;
-	
-	@Inject
-	private ProductRelationshipService productRelationshipService;
-
-	
-	@Inject
-	private LabelUtils messages;
-	
-	@Inject
-	private PricingService pricingService;
-	
-	@Inject
-	private MerchantStoreService merchantService;
-	
-	@Inject
-	@Qualifier("img")
-	private ImageFilePath imageUtils;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(LandingController.class);
 	private final static String HOME_LINK_CODE="HOME";
-	
+
+	private final ContentService contentService;
+	private final ProductRelationshipService productRelationshipService;
+	private final LabelUtils messages;
+	private final PricingService pricingService;
+	private final MerchantStoreService merchantService;
+	private final ImageFilePath imageFilePath;
+
 	@RequestMapping(value={Constants.SHOP_URI + "/home.html",Constants.SHOP_URI +"/", Constants.SHOP_URI}, method=RequestMethod.GET)
 	public String displayLanding(Model model, HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {
 		
@@ -118,7 +105,7 @@ public class LandingController {
 		
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setimageUtils(imageFilePath);
 
 		
 		//featured items

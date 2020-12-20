@@ -64,7 +64,7 @@ public class ContentApi {
 	private ContentFacade contentFacade;
 
 	@Inject
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 
 	

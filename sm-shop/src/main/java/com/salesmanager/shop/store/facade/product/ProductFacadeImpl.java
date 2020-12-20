@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -80,7 +78,7 @@ class ProductFacadeImpl implements ProductFacade {
 	private final ProductRelationshipService productRelationshipService;
 	private final PersistableProductPopulator persistableProductPopulator;
 
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 
 	@Override

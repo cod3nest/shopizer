@@ -33,9 +33,8 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        
-
     	String origin = "*";
+
     	if(!StringUtils.isBlank(request.getHeader("origin"))) {
     		origin = request.getHeader("origin");
     	}
@@ -46,16 +45,12 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     	response.setHeader("Access-Control-Allow-Credentials", "true");
 
     	try {
-    		
     		String ipAddress = GeoLocationUtils.getClientIpAddress(request);
-    		
     		UserContext userContext = UserContext.create();
     		userContext.setIpAddress(ipAddress);
-    		
     	} catch(Exception s) {
     		LOGGER.error("Error while getting ip address ", s);
     	}
-
 
     	if(request.getRequestURL().toString().contains("/api/v1/auth")) {
     		//setHeader(request,response);   	
@@ -80,24 +75,21 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     	
     	if(request.getRequestURL().toString().contains("/api/v1/private")) {
     		
-    		//setHeader(request,response);  
-    		
+    		//setHeader(request,response);
     		Enumeration<String> headers = request.getHeaderNames();
+
     		while(headers.hasMoreElements()) {
     			LOGGER.debug(headers.nextElement());
     		}
 
 	    	final String requestHeader = request.getHeader(this.tokenHeader);//token
-	    	
+
 	    	try {
 		        if (requestHeader != null && requestHeader.startsWith(BEARER_TOKEN)) {//Bearer
-
 					jwtAdminAuthenticationManager.authenticateRequest(request, response);
-	
 		        } else {
 		        	LOGGER.warn("couldn't find any authorization token, will ignore the header, might be a preflight check");
 		        }
-	        
 	    	} catch(Exception e) {
 	    		throw new ServletException(e);
 	    	}
@@ -106,22 +98,15 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         chain.doFilter(request, response);
         postFilter(request, response, chain);
     }
-    
-    
+
     private void postFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-    	
     	try {
-    		
     		UserContext userContext = UserContext.getCurrentInstance();
     		if(userContext!=null) {
     			userContext.close();
     		}
-    		
     	} catch(Exception s) {
     		LOGGER.error("Error while getting ip address ", s);
     	}
-    	
     }
-
-
 }

@@ -2,11 +2,11 @@ package com.salesmanager.shop.store.api.v1.customer;
 
 import java.security.Principal;
 import java.util.Optional;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,7 +23,7 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.model.customer.PersistableCustomer;
 import com.salesmanager.shop.model.customer.ReadableCustomer;
 import com.salesmanager.shop.populator.customer.ReadableCustomerList;
-import com.salesmanager.shop.store.controller.customer.facade.CustomerFacade;
+import com.salesmanager.shop.store.facade.customer.CustomerFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -32,6 +32,8 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1")
 @Api(tags = {"Customer management resource (Customer Management Api)"})
@@ -40,11 +42,7 @@ import springfox.documentation.annotations.ApiIgnore;
 })
 public class CustomerApi {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CustomerApi.class);
-
-  @Inject
-  private CustomerFacade customerFacade;
-
+  private final CustomerFacade customerFacade;
 
   /** Create new customer for a given MerchantStore */
   @PostMapping("/private/customer")

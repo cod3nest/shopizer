@@ -24,7 +24,7 @@ public class EmailUtils {
 	private final static String LOGOPATH = "LOGOPATH";
 	
 	@Inject
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 	
 	/**

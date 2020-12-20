@@ -3,6 +3,8 @@ package com.salesmanager.shop.store.api.v1.shipping;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +28,16 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 @Api(tags = { "Shipping - Expedition management resource (Shipping Management Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "Shipping - Expedition management resource", description = "Manage shipping expedition") })
 public class ShippingExpeditionApi {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingExpeditionApi.class);
-
-	@Autowired
-	private AuthorizationUtils authorizationUtils;
-	
-	@Autowired
-	private ShippingFacade shippingFacade;
+	private final AuthorizationUtils authorizationUtils;
+	private final ShippingFacade shippingFacade;
 
 	@RequestMapping(value = { "/private/shipping/expedition" }, method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)

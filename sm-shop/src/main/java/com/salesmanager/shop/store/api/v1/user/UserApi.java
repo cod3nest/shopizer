@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,17 +56,15 @@ import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
 /** Api for managing admin users */
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1")
 @Api(tags = { "User management resource (User Management Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "User management resource", description = "Manage administration users") })
 public class UserApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserApi.class);
-
-
-	@Inject
-	private UserFacade userFacade;
+	private final UserFacade userFacade;
 
 	/**
 	 * Get userName by merchant code and userName

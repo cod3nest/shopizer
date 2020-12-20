@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,26 +26,16 @@ import com.salesmanager.core.model.user.Permission;
 import com.salesmanager.shop.admin.security.SecurityDataAccessException;
 import com.salesmanager.shop.constants.Constants;
 
+@Slf4j
+@RequiredArgsConstructor
 public abstract class AbstractCustomerServices implements UserDetailsService{
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCustomerServices.class);
-	
-	protected CustomerService customerService;
-	protected PermissionService  permissionService;
-	protected GroupService   groupService;
-	
+
 	public final static String ROLE_PREFIX = "ROLE_";//Spring Security 4
-	
-	public AbstractCustomerServices(
-			CustomerService customerService, 
-			PermissionService permissionService, 
-			GroupService groupService) {
-		
-		this.customerService = customerService;
-		this.permissionService = permissionService;
-		this.groupService = groupService;
-	}
-	
+
+	protected final CustomerService customerService;
+	protected final PermissionService  permissionService;
+	protected final GroupService   groupService;
+
 	protected abstract UserDetails userDetails(String userName, Customer customer, Collection<GrantedAuthority> authorities);
 	
 

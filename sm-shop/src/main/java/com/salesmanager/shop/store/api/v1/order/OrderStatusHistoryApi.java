@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +20,7 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.model.order.history.PersistableOrderStatusHistory;
 import com.salesmanager.shop.model.order.history.ReadableOrderStatusHistory;
-import com.salesmanager.shop.store.controller.order.facade.OrderFacade;
+import com.salesmanager.shop.store.facade.order.OrderFacade;
 import com.salesmanager.shop.utils.AuthorizationUtils;
 
 import io.swagger.annotations.Api;
@@ -29,6 +29,8 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 @Api(tags = { "Order status history api" })
@@ -36,11 +38,8 @@ import springfox.documentation.annotations.ApiIgnore;
 		@Tag(name = "Order status history resource", description = "Related to OrderManagement api") })
 public class OrderStatusHistoryApi {
 
-	@Inject
-	private OrderFacade orderFacade;
-
-	@Inject
-	private AuthorizationUtils authorizationUtils;
+	private final OrderFacade orderFacade;
+	private final AuthorizationUtils authorizationUtils;
 
 	@RequestMapping(value = { "private/orders/{id}/history" }, method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)

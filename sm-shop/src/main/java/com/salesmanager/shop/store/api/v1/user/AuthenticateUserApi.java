@@ -1,12 +1,11 @@
 package com.salesmanager.shop.store.api.v1.user;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.auth.AuthenticationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.salesmanager.shop.store.security.AuthenticationRequest;
 import com.salesmanager.shop.store.security.AuthenticationResponse;
-import com.salesmanager.shop.store.security.JWTTokenUtil;
+import com.salesmanager.shop.store.security.JwtTokenUtil;
 import com.salesmanager.shop.store.security.user.JWTUser;
 
 import io.swagger.annotations.Api;
@@ -35,6 +34,8 @@ import io.swagger.annotations.Tag;
  * @author c.samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/v1")
 @Api(tags = { "User authentication api Api" })
@@ -42,19 +43,12 @@ import io.swagger.annotations.Tag;
 		@Tag(name = "User authentication resource", description = "Login for administrator users") })
 public class AuthenticateUserApi {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateUserApi.class);
+    private final AuthenticationManager jwtAdminAuthenticationManager;
+    private final UserDetailsService jwtAdminServicesImpl;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Value("${authToken.header}")
     private String tokenHeader;
-
-    @Inject
-    private AuthenticationManager jwtAdminAuthenticationManager;
-    
-    @Inject
-    private UserDetailsService jwtAdminDetailsService;
-
-    @Inject
-    private JWTTokenUtil jwtTokenUtil;
 
 	/**
 	 * Authenticate a user using username & password
@@ -96,7 +90,7 @@ public class AuthenticateUserApi {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Reload password post-security so we can generate token
-        final JWTUser userDetails = (JWTUser)jwtAdminDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final JWTUser userDetails = (JWTUser) jwtAdminServicesImpl.loadUserByUsername(authenticationRequest.getUsername());
         
         final String token = jwtTokenUtil.generateToken(userDetails);
 
@@ -114,7 +108,7 @@ public class AuthenticateUserApi {
         }
         
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        JWTUser user = (JWTUser) jwtAdminDetailsService.loadUserByUsername(username);
+        JWTUser user = (JWTUser) jwtAdminServicesImpl.loadUserByUsername(username);
 
         if (jwtTokenUtil.canTokenBeRefreshedWithGrace(token, user.getLastPasswordResetDate())) {
             String refreshedToken = jwtTokenUtil.refreshToken(token);

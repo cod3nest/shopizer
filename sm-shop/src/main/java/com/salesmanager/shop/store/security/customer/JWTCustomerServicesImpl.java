@@ -22,9 +22,6 @@ class JwtCustomerServicesImpl extends AbstractCustomerServices {
 
     public JwtCustomerServicesImpl(CustomerService customerService, PermissionService permissionService, GroupService groupService) {
         super(customerService, permissionService, groupService);
-        this.customerService = customerService;
-        this.permissionService = permissionService;
-        this.groupService = groupService;
     }
 
     @Override

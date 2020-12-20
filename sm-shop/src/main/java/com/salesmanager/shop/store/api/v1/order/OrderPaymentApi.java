@@ -1,32 +1,5 @@
 package com.salesmanager.shop.store.api.v1.order;
 
-import java.security.Principal;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.salesmanager.core.business.services.catalog.product.PricingService;
 import com.salesmanager.core.business.services.customer.CustomerService;
 import com.salesmanager.core.business.services.order.OrderService;
@@ -46,44 +19,54 @@ import com.salesmanager.shop.model.order.v0.ReadableOrderList;
 import com.salesmanager.shop.populator.order.transaction.PersistablePaymentPopulator;
 import com.salesmanager.shop.populator.order.transaction.ReadableTransactionPopulator;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
-import com.salesmanager.shop.store.controller.order.facade.OrderFacade;
+import com.salesmanager.shop.store.facade.order.OrderFacade;
 import com.salesmanager.shop.utils.AuthorizationUtils;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/v1")
 @Api(tags = { "Order payment resource (Order payment Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "Order payment resource", description = "Manage order payments") })
 public class OrderPaymentApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(OrderPaymentApi.class);
-
-	@Inject
-	private CustomerService customerService;
-
-	@Inject
-	private OrderService orderService;
-
-	@Inject
-	private ShoppingCartService shoppingCartService;
-
-	@Inject
-	private PricingService pricingService;
-
-	@Inject
-	private PaymentService paymentService;
-
-	@Inject
-	private OrderFacade orderFacade;
-	
-	@Inject
-	private AuthorizationUtils authorizationUtils;
+	private final CustomerService customerService;
+	private final OrderService orderService;
+	private final ShoppingCartService shoppingCartService;
+	private final PricingService pricingService;
+	private final PaymentService paymentService;
+	private final OrderFacade orderFacade;
+	private final AuthorizationUtils authorizationUtils;
 
 	@RequestMapping(value = { "/cart/{code}/payment/init" }, method = RequestMethod.POST)
 	@ResponseBody

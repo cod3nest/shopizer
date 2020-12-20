@@ -4,14 +4,13 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,8 +33,8 @@ import com.salesmanager.core.model.shoppingcart.ShoppingCart;
 import com.salesmanager.shop.model.customer.address.AddressLocation;
 import com.salesmanager.shop.model.order.shipping.ReadableShippingSummary;
 import com.salesmanager.shop.populator.order.ReadableShippingSummaryPopulator;
-import com.salesmanager.shop.store.controller.order.facade.OrderFacade;
-import com.salesmanager.shop.store.controller.shoppingCart.facade.ShoppingCartFacade;
+import com.salesmanager.shop.store.facade.order.OrderFacade;
+import com.salesmanager.shop.store.facade.shoppingCart.ShoppingCartFacade;
 import com.salesmanager.shop.utils.LabelUtils;
 
 import io.swagger.annotations.Api;
@@ -45,6 +44,8 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/v1")
 @Api(tags = {"Shipping Quotes and Calculation resource (Shipping Api)"})
@@ -53,19 +54,12 @@ import springfox.documentation.annotations.ApiIgnore;
 })
 public class OrderShippingApi {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(OrderShippingApi.class);
-
-  @Inject private CustomerService customerService;
-
-  @Inject private OrderFacade orderFacade;
-
-  @Inject private ShoppingCartFacade shoppingCartFacade;
-
-  @Inject private LabelUtils messages;
-
-  @Inject private PricingService pricingService;
-  
-  @Inject private CountryService countryService;
+  private final CustomerService customerService;
+  private final OrderFacade orderFacade;
+  private final ShoppingCartFacade shoppingCartFacade;
+  private final LabelUtils messages;
+  private final PricingService pricingService;
+  private final CountryService countryService;
 
   /**
    * Get shipping quote for a given shopping cart

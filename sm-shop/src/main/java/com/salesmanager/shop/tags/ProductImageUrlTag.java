@@ -36,7 +36,7 @@ public class ProductImageUrlTag extends RequestContextAwareTag {
 	private FilePathUtils filePathUtils;
 
 	@Inject
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 
 	public int doStartTagInternal() throws JspException {

@@ -51,7 +51,7 @@ public class ContentImageController {
 	private ContentService contentService;
 	
 	@Inject
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 	
 	/**

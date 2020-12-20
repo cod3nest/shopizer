@@ -1,10 +1,10 @@
 package com.salesmanager.shop.store.api.v1.system;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,21 +13,20 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.model.system.PersistableOptin;
 import com.salesmanager.shop.model.system.ReadableOptin;
-import com.salesmanager.shop.store.controller.optin.OptinFacade;
+import com.salesmanager.shop.store.facade.optin.OptinFacade;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
 /** Optin a customer to events such s newsletter */
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class OptinApi {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(OptinApi.class);
-
-  @Inject private OptinFacade optinFacade;
-
+  private final OptinFacade optinFacade;
 
   /** Create new optin */
   @PostMapping("/private/optin")

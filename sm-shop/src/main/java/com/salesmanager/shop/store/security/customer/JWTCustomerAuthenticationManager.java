@@ -1,6 +1,6 @@
 package com.salesmanager.shop.store.security.customer;
 
-import com.salesmanager.shop.store.security.JWTTokenUtil;
+import com.salesmanager.shop.store.security.JwtTokenUtil;
 import com.salesmanager.shop.store.security.common.CustomAuthenticationException;
 import com.salesmanager.shop.store.security.common.CustomAuthenticationManager;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class JwtCustomerAuthenticationManager extends CustomAuthenticationManager {
 	
-    private final JWTTokenUtil jwtTokenUtil;
-    private final UserDetailsService jwtCustomerDetailsService;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsService jwtCustomerServicesImpl;
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -54,7 +54,7 @@ public class JwtCustomerAuthenticationManager extends CustomAuthenticationManage
 
             // It is not compelling necessary to load the use details from the database. You could also store the information
             // in the token and read it from it. It's up to you ;)
-            UserDetails userDetails = this.jwtCustomerDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = this.jwtCustomerServicesImpl.loadUserByUsername(username);
 
             // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
             // the database compellingly. Again it's up to you ;)

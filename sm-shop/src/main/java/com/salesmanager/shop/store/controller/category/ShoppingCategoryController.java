@@ -14,6 +14,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,44 +63,21 @@ import com.salesmanager.shop.utils.PageBuilderUtils;
  * @author Carl Samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ShoppingCategoryController {
-	
 
-	
-	@Inject
 	private CategoryService categoryService;
-	
-	@Inject
 	private LanguageService languageService;
-	
-	@Inject
 	private MerchantStoreService merchantStoreService;
-	
-	@Inject
 	private ProductService productService;
-	
-	@Inject
 	private ManufacturerService manufacturerService;
-
-	@Inject
 	private BreadcrumbsUtils breadcrumbsUtils;
-	
-	@Inject
 	private CacheUtils cache;
-	
-	@Inject
 	private PricingService pricingService;
-	
-	@Inject
-	@Qualifier("img")
-	private ImageFilePath imageUtils;
-	
+	private ImageFilePath imageFilePath;
 
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShoppingCategoryController.class);
-	
-	
 	/**
 	 * 
 	 * @param friendlyUrl
@@ -497,7 +476,7 @@ public class ShoppingCategoryController {
 			
 			ReadableProductPopulator populator = new ReadableProductPopulator();
 			populator.setPricingService(pricingService);
-			populator.setimageUtils(imageUtils);
+			populator.setimageUtils(imageFilePath);
 
 			for(Product product : products) {
 				//create new proxy product
@@ -659,7 +638,7 @@ public class ShoppingCategoryController {
 
 			ReadableProductPopulator populator = new ReadableProductPopulator();
 			populator.setPricingService(pricingService);
-			populator.setimageUtils(imageUtils);
+			populator.setimageUtils(imageFilePath);
 			
 			ProductList productList = new ProductList();
 			for(Product product : products.getProducts()) {

@@ -14,6 +14,8 @@ import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.populator.customer.ReadableCustomerOptionPopulator;
 import com.salesmanager.shop.store.controller.AbstractController;
 import com.salesmanager.shop.store.controller.ControllerConstants;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,6 +37,8 @@ import java.util.Set;
  * @author Carl Samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/shop/customer")
 public class CustomerDashboardController extends AbstractController {

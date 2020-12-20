@@ -3,7 +3,6 @@ package com.salesmanager.shop.tags;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ public class ShopProductRelationshipTag extends RequestContextAwareTag  {
 	private ProductRelationshipService productRelationshipService;
 	private PricingService pricingService;
 	private CacheUtils cache;
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 	
 	private String groupName;

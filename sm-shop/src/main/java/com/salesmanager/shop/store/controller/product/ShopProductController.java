@@ -11,10 +11,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -68,38 +69,21 @@ import com.salesmanager.shop.utils.PageBuilderUtils;
  * @author Carl Samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/shop/product")
 public class ShopProductController {
 	
-	@Inject
 	private ProductService productService;
-	
-	@Inject
 	private ProductAttributeService productAttributeService;
-	
-	@Inject
 	private ProductRelationshipService productRelationshipService;
-	
-	@Inject
 	private PricingService pricingService;
-	
-	@Inject
 	private ProductReviewService productReviewService;
-
-	@Inject
 	private CacheUtils cache;
-	
-	@Inject
 	private BreadcrumbsUtils breadcrumbsUtils;
+	private ImageFilePath imageFilePath;
 	
-	@Inject
-	@Qualifier("img")
-	private ImageFilePath imageUtils;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(ShopProductController.class);
-	
-
 	/**
 	 * Display product details with reference to caller page
 	 * @param friendlyUrl
@@ -149,7 +133,7 @@ public class ShopProductController {
 		
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setimageUtils(imageFilePath);
 		
 		ReadableProduct productProxy = populator.populate(product, new ReadableProduct(), store, language);
 
@@ -261,7 +245,7 @@ public class ShopProductController {
 				}
 				
 				if(!StringUtils.isBlank(attribute.getProductOptionValue().getProductOptionValueImage())) {
-					attrValue.setImage(imageUtils.buildProductPropertyImageUtils(store, attribute.getProductOptionValue().getProductOptionValueImage()));
+					attrValue.setImage(imageFilePath.buildProductPropertyImageUtils(store, attribute.getProductOptionValue().getProductOptionValueImage()));
 				}
 				attrValue.setSortOrder(0);
 				if(attribute.getProductOptionSortOrder()!=null) {
@@ -408,7 +392,7 @@ public class ShopProductController {
 		
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setimageUtils(imageFilePath);
 		
 		List<ProductRelationship> relatedItems = productRelationshipService.getByType(store, product, ProductRelationshipType.RELATED_ITEM);
 		if(relatedItems!=null && relatedItems.size()>0) {

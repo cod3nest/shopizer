@@ -44,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -77,7 +78,7 @@ class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order> imple
     private final OrderTotalService orderTotalService;
     private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(InvoiceModule invoiceModule, ShippingService shippingService, PaymentService paymentService, ProductService productService, TaxService taxService, CustomerService customerService, ShoppingCartService shoppingCartService, TransactionService transactionService, OrderTotalService orderTotalService, OrderRepository orderRepository) {
+    public OrderServiceImpl(InvoiceModule invoiceModule, ShippingService shippingService, @Lazy PaymentService paymentService, ProductService productService, TaxService taxService, CustomerService customerService, ShoppingCartService shoppingCartService, TransactionService transactionService, OrderTotalService orderTotalService, OrderRepository orderRepository) {
         super(orderRepository);
         this.invoiceModule = invoiceModule;
         this.shippingService = shippingService;

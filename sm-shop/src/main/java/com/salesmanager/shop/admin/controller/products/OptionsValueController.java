@@ -54,7 +54,7 @@ public class OptionsValueController {
 	private ContentService contentService;
 	
 	@Inject
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(OptionsValueController.class);

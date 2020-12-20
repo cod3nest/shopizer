@@ -9,6 +9,7 @@ import com.salesmanager.core.model.shipping.Quote;
 import com.salesmanager.core.model.shipping.ShippingSummary;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.Validate;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ class ShippingQuoteServiceImpl extends SalesManagerEntityServiceImpl<Long, Quote
     private final ShippingQuoteRepository shippingQuoteRepository;
     private final ShippingService shippingService;
 
-    public ShippingQuoteServiceImpl(ShippingQuoteRepository repository, ShippingService shippingService) {
+    public ShippingQuoteServiceImpl(ShippingQuoteRepository repository, @Lazy ShippingService shippingService) {
         super(repository);
         this.shippingQuoteRepository = repository;
         // TODO Auto-generated constructor stub

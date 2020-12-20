@@ -9,6 +9,7 @@ import com.salesmanager.core.model.catalog.product.review.ProductReview;
 import com.salesmanager.core.model.customer.Customer;
 import com.salesmanager.core.model.reference.language.Language;
 import org.apache.commons.lang.Validate;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ class ProductReviewServiceImpl extends SalesManagerEntityServiceImpl<Long, Produ
     private final ProductReviewRepository productReviewRepository;
     private final ProductService productService;
 
-    public ProductReviewServiceImpl(ProductReviewRepository productReviewRepository, ProductService productService) {
+    public ProductReviewServiceImpl(ProductReviewRepository productReviewRepository, @Lazy ProductService productService) {
         super(productReviewRepository);
         this.productReviewRepository = productReviewRepository;
         this.productService = productService;

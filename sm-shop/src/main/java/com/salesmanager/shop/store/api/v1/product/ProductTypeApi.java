@@ -2,6 +2,9 @@ package com.salesmanager.shop.store.api.v1.product;
 
 import java.util.List;
 import javax.inject.Inject;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,16 +40,15 @@ import springfox.documentation.annotations.ApiIgnore;
  *
  * @author Carl Samson
  */
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 @Api(tags = { "Product type resource (Product Type Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "Product type resource", description = "Manage product types") })
 public class ProductTypeApi {
 
-	@Inject
-	private ProductTypeFacade productTypeFacade;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductTypeApi.class);
+	private final ProductTypeFacade productTypeFacade;
 
 	@GetMapping(value = "/private/products/types", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "GET", value = "Get product types list", notes = "", produces = "application/json", response = List.class)

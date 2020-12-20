@@ -2,6 +2,8 @@ package com.salesmanager.shop.store.api.v1.tax;
 
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +44,15 @@ import springfox.documentation.annotations.ApiIgnore;
  *
  */
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1")
 @Api(tags = { "Tax rates management resource (Tax rates management Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "Tax rates management resource", description = "Manage tax rates") })
 public class TaxRatesApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TaxRatesApi.class);
-
-	@Autowired
-	private TaxFacade taxFacade;
+	private final TaxFacade taxFacade;
 
 	/** Create new tax rate for a given MerchantStore */
 	@PostMapping("/private/tax/rate")

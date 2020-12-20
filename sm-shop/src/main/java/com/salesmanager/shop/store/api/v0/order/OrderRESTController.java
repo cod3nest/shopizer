@@ -22,68 +22,38 @@ import com.salesmanager.shop.model.order.v0.PersistableOrder;
 import com.salesmanager.shop.model.order.v0.ReadableOrderList;
 import com.salesmanager.shop.populator.customer.CustomerPopulator;
 import com.salesmanager.shop.populator.order.PersistableOrderPopulator;
-import com.salesmanager.shop.store.controller.order.facade.OrderFacade;
+import com.salesmanager.shop.store.facade.order.OrderFacade;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
-@RequestMapping("/services/private")
+@RequestMapping("/services/private final")
 public class OrderRESTController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(OrderRESTController.class);
-	
-	
-	@Inject
-	private MerchantStoreService merchantStoreService;
-	
-	@Inject
-	private ProductService productService;
-	
-	@Inject
-	private ProductAttributeService productAttributeService;
-	
-	@Inject
-	private DigitalProductService digitalProductService;
-	
-	@Inject
-	private OrderFacade orderFacade;
-	
-	@Inject
-	private OrderService orderService;
-	
-	@Inject
-	private CustomerService customerService;
-	
-	@Inject
-	private LanguageService languageService;
-	
-	@Inject
-	private CustomerOptionService customerOptionService;
-	
-	@Inject
-	private ZoneService zoneService;
-	
-	@Inject
-	private CustomerOptionValueService customerOptionValueService;
-	
-	@Inject
-	private CountryService countryService;
-	
-	@Inject
-	private GroupService   groupService;
-	
-	@Autowired
-	private CustomerPopulator customerPopulator;
+	private final MerchantStoreService merchantStoreService;
+	private final ProductService productService;
+	private final ProductAttributeService productAttributeService;
+	private final DigitalProductService digitalProductService;
+	private final OrderFacade orderFacade;
+	private final OrderService orderService;
+	private final CustomerService customerService;
+	private final LanguageService languageService;
+	private final CustomerOptionService customerOptionService;
+	private final ZoneService zoneService;
+	private final CustomerOptionValueService customerOptionValueService;
+	private final CountryService countryService;
+	private final GroupService   groupService;
+	private final CustomerPopulator customerPopulator;
 
 	/**
 	 * This method is for adding order to the system. Generally used for the purpose of migration only

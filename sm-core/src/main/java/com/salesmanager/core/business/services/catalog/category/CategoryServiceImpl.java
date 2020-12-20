@@ -12,6 +12,7 @@ import com.salesmanager.core.model.catalog.category.CategoryDescription;
 import com.salesmanager.core.model.catalog.product.Product;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +35,7 @@ class CategoryServiceImpl extends SalesManagerEntityServiceImpl<Long, Category> 
   private final PageableCategoryRepository pageableCategoryRepository;
   private final CategoryDescriptionRepository categoryDescriptionRepository;
 
-  public CategoryServiceImpl(CategoryRepository categoryRepository, ProductService productService, PageableCategoryRepository pageableCategoryRepository, CategoryDescriptionRepository categoryDescriptionRepository) {
+  public CategoryServiceImpl(CategoryRepository categoryRepository, @Lazy ProductService productService, PageableCategoryRepository pageableCategoryRepository, CategoryDescriptionRepository categoryDescriptionRepository) {
     super(categoryRepository);
     this.categoryRepository = categoryRepository;
 	this.productService = productService;

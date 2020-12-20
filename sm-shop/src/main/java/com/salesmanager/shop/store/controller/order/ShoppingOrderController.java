@@ -8,16 +8,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,9 +78,9 @@ import com.salesmanager.shop.populator.order.ReadableShippingSummaryPopulator;
 import com.salesmanager.shop.populator.order.ReadableShopOrderPopulator;
 import com.salesmanager.shop.store.controller.AbstractController;
 import com.salesmanager.shop.store.controller.ControllerConstants;
-import com.salesmanager.shop.store.controller.customer.facade.CustomerFacade;
-import com.salesmanager.shop.store.controller.order.facade.OrderFacade;
-import com.salesmanager.shop.store.controller.shoppingCart.facade.ShoppingCartFacade;
+import com.salesmanager.shop.store.facade.customer.CustomerFacade;
+import com.salesmanager.shop.store.facade.order.OrderFacade;
+import com.salesmanager.shop.store.facade.shoppingCart.ShoppingCartFacade;
 import com.salesmanager.shop.utils.EmailTemplatesUtils;
 import com.salesmanager.shop.utils.LabelUtils;
 
@@ -91,67 +90,32 @@ import com.salesmanager.shop.utils.LabelUtils;
  * @author carlsamson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping(Constants.SHOP_URI+"/order")
 public class ShoppingOrderController extends AbstractController {
-	
-	private static final Logger LOGGER = LoggerFactory
-	.getLogger(ShoppingOrderController.class);
-	
+
+	private final ShoppingCartFacade shoppingCartFacade;
+    private final ShoppingCartService shoppingCartService;
+	private final PaymentService paymentService;
+	private final CustomerService customerService;
+	private final ShippingService shippingService;
+	private final LanguageService languageService;
+	private final OrderService orderService;
+	private final CountryService countryService;
+	private final ZoneService zoneService;
+	private final OrderFacade orderFacade;
+	private final CustomerFacade customerFacade;
+	private final LabelUtils messages;
+	private final PricingService pricingService;
+	private final ProductService productService;
+	private final EmailTemplatesUtils emailTemplatesUtils;
+	private final OrderProductDownloadService orderProdctDownloadService;
+
 	@Value("${config.googleMapsKey}")
 	private String googleMapsKey;
-	
-	@Inject
-	private ShoppingCartFacade shoppingCartFacade;
-	
-    @Inject
-    private ShoppingCartService shoppingCartService;
 
-	@Inject
-	private PaymentService paymentService;
-	
-	@Inject
-	private CustomerService customerService;
-	
-	@Inject
-	private ShippingService shippingService;
-	
-	@Inject
-	private LanguageService languageService;
-	
-	@Inject
-	private OrderService orderService;
-	
-	@Inject
-	private CountryService countryService;
-	
-	@Inject
-	private ZoneService zoneService;
-	
-	@Inject
-	private OrderFacade orderFacade;
-	
-	@Inject
-	private CustomerFacade customerFacade;
-	
-	@Inject
-	private LabelUtils messages;
-	
-	@Inject
-	private PricingService pricingService;
-	
-	@Inject
-	private ProductService productService;
-	
-	//@Inject
-	//private PasswordEncoder passwordEncoder;
-
-	@Inject
-	private EmailTemplatesUtils emailTemplatesUtils;
-	
-	@Inject
-	private OrderProductDownloadService orderProdctDownloadService;
-	
 	@SuppressWarnings("unused")
 	@RequestMapping("/checkout.html")
 	public String displayCheckout(@CookieValue("cart") String cookie, Model model, HttpServletRequest request, HttpServletResponse response, Locale locale) throws Exception {

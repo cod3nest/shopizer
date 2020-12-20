@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,8 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1")
 @Api(tags = { "Category management resource (Category Management Api)" })
@@ -56,11 +60,8 @@ public class CategoryApi {
 
 	private static final int DEFAULT_CATEGORY_DEPTH = 0;
 
-	@Inject
-	private CategoryFacade categoryFacade;
-
-	@Inject
-	private UserFacade userFacade;
+	private final CategoryFacade categoryFacade;
+	private final UserFacade userFacade;
 
 	@GetMapping(value = "/category/{id}", produces = { APPLICATION_JSON_VALUE })
 	@ApiOperation(httpMethod = "GET", value = "Get category list for an given Category id", notes = "List current Category and child category")

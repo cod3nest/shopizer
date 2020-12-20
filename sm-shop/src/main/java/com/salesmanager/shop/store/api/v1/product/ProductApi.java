@@ -78,7 +78,7 @@ public class ProductApi {
   @Inject private ProductFacade productFacade;
 
   @Inject
-  @Qualifier("img")
+  @Qualifier("imageFilePath")
   private ImageFilePath imageUtils;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ProductApi.class);

@@ -18,21 +18,21 @@ import com.salesmanager.core.model.shipping.ShippingConfiguration;
 import com.salesmanager.core.model.shipping.ShippingProduct;
 import com.salesmanager.core.model.system.MerchantLog;
 import com.salesmanager.core.modules.integration.shipping.model.Packaging;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@RequiredArgsConstructor
 public class DefaultPackagingImpl implements Packaging {
 
-	
-	@Inject
-	private ShippingService shippingService;
-	
-	@Inject
-	private MerchantLogService merchantLogService;
-	
 	/** default dimensions **/
 	private final static Double defaultWeight = 1D;
 	private final static Double defaultHeight = 4D;
 	private final static Double defaultLength = 4D;
 	private final static Double defaultWidth = 4D;
+
+	private final ShippingService shippingService;
+	private final MerchantLogService merchantLogService;
 	
 	@Override
 	public List<PackageDetails> getBoxPackagesDetails(

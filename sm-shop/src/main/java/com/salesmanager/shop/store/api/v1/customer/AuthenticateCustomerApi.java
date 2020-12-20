@@ -1,13 +1,13 @@
 package com.salesmanager.shop.store.api.v1.customer;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.Validate;
 import org.apache.http.auth.AuthenticationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +28,11 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.model.customer.PersistableCustomer;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
-import com.salesmanager.shop.store.controller.customer.facade.CustomerFacade;
-import com.salesmanager.shop.store.controller.store.facade.StoreFacade;
+import com.salesmanager.shop.store.facade.customer.CustomerFacade;
+import com.salesmanager.shop.store.facade.store.StoreFacade;
 import com.salesmanager.shop.store.security.AuthenticationRequest;
 import com.salesmanager.shop.store.security.AuthenticationResponse;
-import com.salesmanager.shop.store.security.JWTTokenUtil;
+import com.salesmanager.shop.store.security.JwtTokenUtil;
 import com.salesmanager.shop.store.security.PasswordRequest;
 import com.salesmanager.shop.store.security.user.JWTUser;
 import com.salesmanager.shop.utils.LanguageUtils;
@@ -41,6 +41,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 @Api(tags = {"Customer authentication resource (Customer Authentication Api)"})
@@ -48,30 +50,17 @@ import io.swagger.annotations.Tag;
     @Tag(name = "Customer authentication resource", description = "Authenticates customer, register customer and reset customer password")
 })
 public class AuthenticateCustomerApi {
-    
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateCustomerApi.class);
+
+    private final AuthenticationManager jwtCustomerAuthenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsService jwtCustomerServicesImpl;
+    private final CustomerFacade customerFacade;
+    private final StoreFacade storeFacade;
+    private final LanguageUtils languageUtils;
 
     @Value("${authToken.header}")
     private String tokenHeader;
 
-    @Inject
-    private AuthenticationManager jwtCustomerAuthenticationManager;
-
-    @Inject
-    private JWTTokenUtil jwtTokenUtil;
-
-    @Inject
-    private UserDetailsService jwtCustomerDetailsService;
-    
-    @Inject
-    private CustomerFacade customerFacade;
-    
-    @Inject
-    private StoreFacade storeFacade;
-    
-    @Inject
-    private LanguageUtils languageUtils;
-    
     /**
      * Create new customer for a given MerchantStore, then authenticate that customer
      */
@@ -119,7 +108,7 @@ public class AuthenticateCustomerApi {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Reload password post-security so we can generate token
-            final JWTUser userDetails = (JWTUser)jwtCustomerDetailsService.loadUserByUsername(customer.getUserName());
+            final JWTUser userDetails = (JWTUser) jwtCustomerServicesImpl.loadUserByUsername(customer.getUserName());
             final String token = jwtTokenUtil.generateToken(userDetails);
 
             // Return the token
@@ -168,7 +157,7 @@ public class AuthenticateCustomerApi {
 
         // Reload password post-security so we can generate token
         // todo create one for social
-        final JWTUser userDetails = (JWTUser)jwtCustomerDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final JWTUser userDetails = (JWTUser) jwtCustomerServicesImpl.loadUserByUsername(authenticationRequest.getUsername());
         
         final String token = jwtTokenUtil.generateToken(userDetails);
 
@@ -183,7 +172,7 @@ public class AuthenticateCustomerApi {
         System.out.println("--------------------- TOKEN : " + token);
 
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        JWTUser user = (JWTUser) jwtCustomerDetailsService.loadUserByUsername(username);
+        JWTUser user = (JWTUser) jwtCustomerServicesImpl.loadUserByUsername(username);
 
         if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
             String refreshedToken = jwtTokenUtil.refreshToken(token);

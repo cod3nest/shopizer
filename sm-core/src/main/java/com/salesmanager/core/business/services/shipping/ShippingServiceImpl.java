@@ -45,6 +45,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -71,12 +72,14 @@ class ShippingServiceImpl implements ShippingService {
     private final MerchantConfigurationService merchantConfigurationService;
     private final PricingService pricingService;
     private final ModuleConfigurationService moduleConfigurationService;
-    private final Packaging packaging;
     private final CountryService countryService;
     private final LanguageService languageService;
     private final Encryption encryption;
     private final ShippingOriginService shippingOriginService;
     private final ShippingQuoteService shippingQuoteService;
+
+    @Autowired
+    private Packaging packaging;
 
     @Resource(name = "shippingModules")
     private Map<String, ShippingQuoteModule> shippingModules;

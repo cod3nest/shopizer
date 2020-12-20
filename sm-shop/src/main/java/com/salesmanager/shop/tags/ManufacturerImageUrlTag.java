@@ -1,6 +1,5 @@
 package com.salesmanager.shop.tags;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
@@ -35,7 +34,7 @@ public class ManufacturerImageUrlTag extends RequestContextAwareTag {
 	private Manufacturer manufacturer;
 	
 	private FilePathUtils filePathUtils;
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 
 	public int doStartTagInternal() throws JspException {

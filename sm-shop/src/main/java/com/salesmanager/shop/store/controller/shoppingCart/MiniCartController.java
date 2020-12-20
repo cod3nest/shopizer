@@ -9,34 +9,29 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.model.shoppingcart.ShoppingCartData;
 import com.salesmanager.shop.store.controller.AbstractController;
-import com.salesmanager.shop.store.controller.shoppingCart.facade.ShoppingCartFacade;
+import com.salesmanager.shop.store.facade.shoppingCart.ShoppingCartFacade;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Umesh A
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/shop/cart")
 public class MiniCartController extends AbstractController{
 
-	private static final Logger LOG = LoggerFactory.getLogger(MiniCartController.class);
-	
-	@Inject
-	private ShoppingCartFacade shoppingCartFacade;
-	
-	
-
+	private final ShoppingCartFacade shoppingCartFacade;
 	
 	@RequestMapping(value={"/displayMiniCartByCode"},  method = { RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody ShoppingCartData displayMiniCart(final String shoppingCartCode, HttpServletRequest request, Model model){
@@ -58,7 +53,7 @@ public class MiniCartController extends AbstractController{
 			
 			
 		} catch(Exception e) {
-			LOG.error("Error while getting the shopping cart",e);
+			LOGGER.error("Error while getting the shopping cart",e);
 		}
 		
 		return null;
@@ -90,7 +85,7 @@ public class MiniCartController extends AbstractController{
 		
 		request.getSession().setAttribute(Constants.SHOPPING_CART, cart.getCode());
 		
-		LOG.debug("removed item" + lineItemId + "from cart");
+		LOGGER.debug("removed item" + lineItemId + "from cart");
 		return shoppingCartData;
 	}
 	

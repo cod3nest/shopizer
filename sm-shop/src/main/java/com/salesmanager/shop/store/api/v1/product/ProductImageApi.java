@@ -6,6 +6,9 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,16 +34,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/v1")
 public class ProductImageApi {
 
-  @Inject private ProductImageService productImageService;
-
-
-  @Inject private ProductService productService;
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(ProductImageApi.class);
+  private final ProductImageService productImageService;
+  private final ProductService productService;
 
   /**
    * To be used with MultipartFile

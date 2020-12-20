@@ -16,7 +16,6 @@ import static com.salesmanager.shop.constants.Constants.URL_EXTENSION;
 import java.util.Properties;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -40,7 +39,7 @@ public class FilePathUtils {
 
 	private CoreConfiguration coreConfiguration;
 
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 
 	@Resource(name = "shopizer-properties")

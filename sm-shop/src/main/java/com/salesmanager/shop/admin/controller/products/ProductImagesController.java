@@ -30,7 +30,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -44,7 +43,7 @@ public class ProductImagesController {
 	private ProductService productService;
 	private ProductImageService productImageService;
 	private LabelUtils messages;
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 
 	@PreAuthorize("hasRole('PRODUCTS')")

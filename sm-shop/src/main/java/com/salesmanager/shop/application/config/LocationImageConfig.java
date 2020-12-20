@@ -16,21 +16,15 @@ public class LocationImageConfig {
     private final CmsProperties cmsProperties;
 
     @Bean
-    public ImageFilePath img() {
-
+    public ImageFilePath imageFilePath() {
         if (!StringUtils.isEmpty(cmsProperties.getMethod()) && !cmsProperties.getMethod().equals("default")) {
             CloudFilePathUtils cloudFilePathUtils = new CloudFilePathUtils();
             cloudFilePathUtils.setBasePath(cmsProperties.getContentUrl());
             return cloudFilePathUtils;
-
         } else {
             LocalImageFilePathUtils localImageFilePathUtils = new LocalImageFilePathUtils();
             localImageFilePathUtils.setBasePath(cmsProperties.getStaticPath());
             return localImageFilePathUtils;
         }
-
-
     }
-
-
 }

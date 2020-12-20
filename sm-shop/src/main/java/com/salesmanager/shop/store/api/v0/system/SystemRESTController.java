@@ -5,6 +5,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,16 +25,13 @@ import com.salesmanager.core.business.utils.ajax.AjaxResponse;
  * @author Carl Samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/services")
 public class SystemRESTController {
-	
 
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SystemRESTController.class);
-	
-	@Inject
-	private ModuleConfigurationService moduleConfigurationService;
+	private final ModuleConfigurationService moduleConfigurationService;
 	
 	/**
 	 * Creates or updates a configuration module. A JSON has to be created on the client side which represents

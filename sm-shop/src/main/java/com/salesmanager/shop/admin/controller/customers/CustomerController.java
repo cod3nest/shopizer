@@ -30,7 +30,7 @@ import com.salesmanager.shop.admin.model.customer.attribute.CustomerOptionValue;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.populator.customer.ReadableCustomerOptionPopulator;
-import com.salesmanager.shop.store.controller.customer.facade.CustomerFacade;
+import com.salesmanager.shop.store.facade.customer.CustomerFacade;
 import com.salesmanager.shop.utils.EmailUtils;
 import com.salesmanager.shop.utils.LabelUtils;
 import com.salesmanager.shop.utils.LocaleUtils;

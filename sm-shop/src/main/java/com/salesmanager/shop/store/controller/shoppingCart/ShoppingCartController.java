@@ -7,14 +7,13 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,7 +35,7 @@ import com.salesmanager.shop.model.shoppingcart.ShoppingCartData;
 import com.salesmanager.shop.model.shoppingcart.ShoppingCartItem;
 import com.salesmanager.shop.store.controller.AbstractController;
 import com.salesmanager.shop.store.controller.ControllerConstants;
-import com.salesmanager.shop.store.controller.shoppingCart.facade.ShoppingCartFacade;
+import com.salesmanager.shop.store.facade.shoppingCart.ShoppingCartFacade;
 import com.salesmanager.shop.utils.LabelUtils;
 import com.salesmanager.shop.utils.LanguageUtils;
 
@@ -84,28 +83,17 @@ import com.salesmanager.shop.utils.LanguageUtils;
  * @author Carl Samson
  * @author Umesh
  */
-
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/shop/cart/")
 public class ShoppingCartController extends AbstractController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ShoppingCartController.class);
-	@Inject
-	private ProductService productService;
-
-	@Inject
-	private ShoppingCartService shoppingCartService;
-
-	@Inject
-	private ShoppingCartFacade shoppingCartFacade;
-	
-	@Inject
-	private LabelUtils messages;
-	
-	@Inject
-	private LanguageUtils languageUtils;
-	
-	
+	private final ProductService productService;
+	private final ShoppingCartService shoppingCartService;
+	private final ShoppingCartFacade shoppingCartFacade;
+	private final LabelUtils messages;
+	private final LanguageUtils languageUtils;
 
 	/**
 	 * Add an item to the ShoppingCart (AJAX exposed method)
@@ -226,7 +214,7 @@ public class ShoppingCartController extends AbstractController {
     
     private String shoppingCart( final Model model, final HttpServletRequest request, final HttpServletResponse response, final Locale locale ) throws Exception {
 
-        LOG.debug( "Starting to calculate shopping cart..." );
+        LOGGER.debug( "Starting to calculate shopping cart..." );
         Language language = (Language)request.getAttribute(Constants.LANGUAGE);
         
         
@@ -430,7 +418,7 @@ public class ShoppingCartController extends AbstractController {
 			ajaxResponse.setStatus(AjaxResponse.RESPONSE_STATUS_SUCCESS);
 
 		} catch (Exception e) {
-			LOG.error("Excption while updating cart" ,e);
+			LOGGER.error("Excption while updating cart" ,e);
 			ajaxResponse.setStatus(AjaxResponse.RESPONSE_STATUS_FAIURE);
 		}
 

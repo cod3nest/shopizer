@@ -60,7 +60,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	private LanguageService languageService;
 
 	@Inject
-	@Qualifier("img")
+	@Qualifier("imageFilePath")
 	private ImageFilePath imageUtils;
 
 	@Inject

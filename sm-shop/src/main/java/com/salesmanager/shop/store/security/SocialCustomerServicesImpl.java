@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 class SocialCustomerServicesImpl implements UserDetailsService {
 
-    private final UserDetailsService customerDetailsService;
+    private final UserDetailsService jwtCustomerServicesImpl;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //delegates to Customer fetch service
-        UserDetails userDetails = customerDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = jwtCustomerServicesImpl.loadUserByUsername(username);
         if (userDetails == null) {
             return null;
         }

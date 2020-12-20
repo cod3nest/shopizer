@@ -3,10 +3,13 @@ package com.salesmanager.shop.application.config;
 import com.salesmanager.shop.admin.security.UserAuthenticationSuccessHandler;
 import com.salesmanager.shop.admin.security.WebUserServices;
 import com.salesmanager.shop.store.security.AuthenticationTokenFilter;
+import com.salesmanager.shop.store.security.JwtTokenUtil;
 import com.salesmanager.shop.store.security.ServicesAuthenticationSuccessHandler;
-import com.salesmanager.shop.store.security.admin.JWTAdminAuthenticationProvider;
-import com.salesmanager.shop.store.security.customer.JWTCustomerAuthenticationProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.salesmanager.shop.store.security.admin.JwtAdminAuthenticationManager;
+import com.salesmanager.shop.store.security.admin.JwtAdminAuthenticationProvider;
+import com.salesmanager.shop.store.security.common.CustomAuthenticationManager;
+import com.salesmanager.shop.store.security.customer.JwtCustomerAuthenticationManager;
+import com.salesmanager.shop.store.security.customer.JwtCustomerAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +39,16 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class MultipleEntryPointsSecurityConfig {
 
     private static final String API_V1 = "/api/v1";
+
+    @Bean
+    public CustomAuthenticationManager jwtCustomerAuthenticationManager(JwtTokenUtil jwtTokenUtil, UserDetailsService jwtCustomerServicesImpl) {
+        return new JwtCustomerAuthenticationManager(jwtTokenUtil, jwtCustomerServicesImpl);
+    }
+
+    @Bean
+    public CustomAuthenticationManager jwtAdminAuthenticationManager(JwtTokenUtil jwtTokenUtil, UserDetailsService jwtAdminServicesImpl) {
+        return new JwtAdminAuthenticationManager(jwtTokenUtil, jwtAdminServicesImpl);
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -143,14 +156,13 @@ public class MultipleEntryPointsSecurityConfig {
     @Order(2)
     public static class ServicesApiConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
-        @Autowired
-        private WebUserServices userDetailsService;
+        private final WebUserServices userDetailsService;
+        private final ServicesAuthenticationSuccessHandler servicesAuthenticationSuccessHandler;
 
-        @Autowired
-        private ServicesAuthenticationSuccessHandler servicesAuthenticationSuccessHandler;
-
-        public ServicesApiConfigurationAdapter() {
+        public ServicesApiConfigurationAdapter(WebUserServices userDetailsService, ServicesAuthenticationSuccessHandler servicesAuthenticationSuccessHandler) {
             super();
+            this.userDetailsService = userDetailsService;
+            this.servicesAuthenticationSuccessHandler = servicesAuthenticationSuccessHandler;
         }
 
         @Override
@@ -191,14 +203,13 @@ public class MultipleEntryPointsSecurityConfig {
     @Order(3)
     public static class AdminConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
-        @Autowired
-        private WebUserServices userDetailsService;
+        private final WebUserServices userDetailsService;
+        private final UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
 
-        @Autowired
-        private UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
-
-        public AdminConfigurationAdapter() {
+        public AdminConfigurationAdapter(WebUserServices userDetailsService, UserAuthenticationSuccessHandler userAuthenticationSuccessHandler) {
             super();
+            this.userDetailsService = userDetailsService;
+            this.userAuthenticationSuccessHandler = userAuthenticationSuccessHandler;
         }
 
         @Override
@@ -263,12 +274,14 @@ public class MultipleEntryPointsSecurityConfig {
     public static class UserApiConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         private final AuthenticationTokenFilter authenticationTokenFilter;
-        private final UserDetailsService jwtUserDetailsService;
+        private final UserDetailsService jwtAdminServicesImpl;
+        private final PasswordEncoder passwordEncoder;
 
-        public UserApiConfigurationAdapter(AuthenticationTokenFilter authenticationTokenFilter, @Qualifier("jwtAdminServicesImpl") UserDetailsService jwtAdminServicesImpl) {
+        public UserApiConfigurationAdapter(AuthenticationTokenFilter authenticationTokenFilter, @Qualifier("jwtAdminServicesImpl") UserDetailsService jwtAdminServicesImpl, PasswordEncoder passwordEncoder) {
             super();
             this.authenticationTokenFilter = authenticationTokenFilter;
-            jwtUserDetailsService = jwtAdminServicesImpl;
+            this.jwtAdminServicesImpl = jwtAdminServicesImpl;
+            this.passwordEncoder = passwordEncoder;
         }
 
         @Bean("jwtAdminAuthenticationManager")
@@ -280,7 +293,7 @@ public class MultipleEntryPointsSecurityConfig {
 
         @Override
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(jwtUserDetailsService)
+            auth.userDetailsService(jwtAdminServicesImpl)
                     .and()
                     .authenticationProvider(authenticationProvider());
         }
@@ -310,9 +323,7 @@ public class MultipleEntryPointsSecurityConfig {
 
         @Bean
         public AuthenticationProvider authenticationProvider() {
-            JWTAdminAuthenticationProvider provider = new JWTAdminAuthenticationProvider();
-            provider.setUserDetailsService(jwtUserDetailsService);
-            return provider;
+            return new JwtAdminAuthenticationProvider(jwtAdminServicesImpl, passwordEncoder);
         }
 
         @Bean
@@ -335,12 +346,14 @@ public class MultipleEntryPointsSecurityConfig {
     public static class CustomeApiConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         private final AuthenticationTokenFilter authenticationTokenFilter;
-        private final UserDetailsService jwtCustomerDetailsService;
+        private final UserDetailsService jwtCustomerServicesImpl;
+        private final PasswordEncoder passwordEncoder;
 
-        public CustomeApiConfigurationAdapter(AuthenticationTokenFilter authenticationTokenFilter, @Qualifier("jwtCustomerServicesImpl") UserDetailsService jwtCustomerDetailsService) {
+        public CustomeApiConfigurationAdapter(AuthenticationTokenFilter authenticationTokenFilter, @Qualifier("jwtCustomerServicesImpl") UserDetailsService jwtCustomerServicesImpl, PasswordEncoder passwordEncoder) {
             super();
             this.authenticationTokenFilter = authenticationTokenFilter;
-            this.jwtCustomerDetailsService = jwtCustomerDetailsService;
+            this.jwtCustomerServicesImpl = jwtCustomerServicesImpl;
+            this.passwordEncoder = passwordEncoder;
         }
 
         @Bean("jwtCustomerAuthenticationManager")
@@ -351,7 +364,7 @@ public class MultipleEntryPointsSecurityConfig {
 
         @Override
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(jwtCustomerDetailsService);
+            auth.userDetailsService(jwtCustomerServicesImpl);
         }
 
         @Override
@@ -375,9 +388,7 @@ public class MultipleEntryPointsSecurityConfig {
 
         @Bean
         public AuthenticationProvider authenticationProvider() {
-            JWTCustomerAuthenticationProvider provider = new JWTCustomerAuthenticationProvider();
-            provider.setUserDetailsService(jwtCustomerDetailsService);
-            return provider;
+            return new JwtCustomerAuthenticationProvider(jwtCustomerServicesImpl, passwordEncoder);
         }
 
         @Bean

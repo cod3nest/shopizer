@@ -4,12 +4,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.Arrays;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,7 +29,7 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.model.shoppingcart.PersistableShoppingCartItem;
 import com.salesmanager.shop.model.shoppingcart.ReadableShoppingCart;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
-import com.salesmanager.shop.store.controller.shoppingCart.facade.ShoppingCartFacade;
+import com.salesmanager.shop.store.facade.shoppingCart.ShoppingCartFacade;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,7 +39,8 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
-
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/api/v1")
 @Api(tags = {"Shopping cart api"})
@@ -49,11 +49,8 @@ import springfox.documentation.annotations.ApiIgnore;
 })
 public class ShoppingCartApi {
 
-  @Inject private ShoppingCartFacade shoppingCartFacade;
-
-  @Inject private CustomerService customerService;
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(ShoppingCartApi.class);
+  private final ShoppingCartFacade shoppingCartFacade;
+  private final CustomerService customerService;
 
   @ResponseStatus(HttpStatus.CREATED)
   @RequestMapping(value = "/cart", method = RequestMethod.POST)

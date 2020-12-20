@@ -10,12 +10,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +45,7 @@ import com.salesmanager.shop.model.store.ReadableMerchantStore;
 import com.salesmanager.shop.model.store.ReadableMerchantStoreList;
 import com.salesmanager.shop.store.api.exception.RestApiException;
 import com.salesmanager.shop.store.api.exception.UnauthorizedException;
-import com.salesmanager.shop.store.controller.store.facade.StoreFacade;
+import com.salesmanager.shop.store.facade.store.StoreFacade;
 import com.salesmanager.shop.store.controller.user.facade.UserFacade;
 import com.salesmanager.shop.utils.ServiceRequestCriteriaBuilderUtils;
 
@@ -58,6 +57,8 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 @Api(tags = { "Merchant and store management resource (Merchant - Store Management Api)" })
@@ -65,16 +66,11 @@ import springfox.documentation.annotations.ApiIgnore;
 		@Tag(name = "Merchant and store management", description = "Edit merchants (retailers) and stores") })
 public class MerchantStoreApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MerchantStoreApi.class);
-
 	private static final Map<String, String> MAPPING_FIELDS = ImmutableMap.<String, String>builder()
 			.put("name", "name").put("readableAudit.user", "auditSection.modifiedBy").build();
 
-	@Inject
-	private StoreFacade storeFacade;
-
-	@Inject
-	private UserFacade userFacade;
+	private final StoreFacade storeFacade;
+	private final UserFacade userFacade;
 
 	@GetMapping(value = { "/store/{code}" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "GET", value = "Get merchant store", notes = "", response = ReadableMerchantStore.class)

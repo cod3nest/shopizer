@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static com.salesmanager.shop.store.controller.customer.facade.CustomerFacade.USERNAME_LENGTH;
+import static com.salesmanager.shop.store.facade.customer.CustomerFacade.USERNAME_LENGTH;
 
 
 /**

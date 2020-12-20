@@ -22,7 +22,7 @@ import com.salesmanager.shop.utils.ImageFilePath;
 public class ReadableProductOptionValueMapper implements Mapper<ProductOptionValue, ReadableProductOptionValueEntity> {
 
   @Autowired
-  @Qualifier("img")
+  @Qualifier("imageFilePath")
   private ImageFilePath imageUtils;
 
   @Override

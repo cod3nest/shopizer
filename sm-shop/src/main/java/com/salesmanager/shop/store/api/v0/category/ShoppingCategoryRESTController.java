@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,25 +39,15 @@ import com.salesmanager.shop.utils.LanguageUtils;
  * @author Carl Samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/services")
 public class ShoppingCategoryRESTController {
 
-	
-	@Inject
-	private MerchantStoreService merchantStoreService;
-	
-	@Inject
-	private LanguageUtils languageUtils;
-	
-	@Inject
-	private CategoryFacade categoryFacade;
-	
-
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShoppingCategoryRESTController.class);
-	
-
+	private final MerchantStoreService merchantStoreService;
+	private final LanguageUtils languageUtils;
+	private final CategoryFacade categoryFacade;
 	
 	@RequestMapping( value="/public/{store}/category/{id}", method=RequestMethod.GET)
 	@ResponseBody
