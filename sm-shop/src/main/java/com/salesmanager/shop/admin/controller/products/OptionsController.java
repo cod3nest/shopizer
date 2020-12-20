@@ -10,6 +10,8 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.LabelUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class OptionsController {
 	
@@ -271,7 +275,7 @@ public class OptionsController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 		
 		
@@ -333,7 +337,7 @@ public class OptionsController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 

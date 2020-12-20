@@ -24,8 +24,8 @@ public class EmailUtils {
 	private final static String LOGOPATH = "LOGOPATH";
 	
 	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 	
 	/**
 	 * Builds generic html email information
@@ -52,7 +52,7 @@ public class EmailUtils {
 			//TODO revise
 			StringBuilder logoPath = new StringBuilder();
 			String scheme = Constants.HTTP_SCHEME;
-			logoPath.append("<img src='").append(scheme).append("://").append(store.getDomainName()).append(contextPath).append("/").append(imageUtils.buildStoreLogoFilePath(store)).append("' style='max-width:400px;'>");
+			logoPath.append("<img src='").append(scheme).append("://").append(store.getDomainName()).append(contextPath).append("/").append(imageFilePath.buildStoreLogoFilePath(store)).append("' style='max-width:400px;'>");
 			templateTokens.put(LOGOPATH, logoPath.toString());
 		} else {
 			templateTokens.put(LOGOPATH, store.getStorename());

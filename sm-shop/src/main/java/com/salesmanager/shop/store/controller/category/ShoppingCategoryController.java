@@ -476,7 +476,7 @@ public class ShoppingCategoryController {
 			
 			ReadableProductPopulator populator = new ReadableProductPopulator();
 			populator.setPricingService(pricingService);
-			populator.setimageUtils(imageFilePath);
+			populator.setImageFilePath(imageFilePath);
 
 			for(Product product : products) {
 				//create new proxy product
@@ -638,7 +638,7 @@ public class ShoppingCategoryController {
 
 			ReadableProductPopulator populator = new ReadableProductPopulator();
 			populator.setPricingService(pricingService);
-			populator.setimageUtils(imageFilePath);
+			populator.setImageFilePath(imageFilePath);
 			
 			ProductList productList = new ProductList();
 			for(Product product : products.getProducts()) {

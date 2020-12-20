@@ -997,7 +997,7 @@ class OrderFacadeImpl implements OrderFacade {
 			orderProductPopulator.setLocale(locale);
 			orderProductPopulator.setProductService(productService);
 			orderProductPopulator.setPricingService(pricingService);
-			orderProductPopulator.setimageUtils(imageFilePath);
+			orderProductPopulator.setImageFilePath(imageFilePath);
 			ReadableOrderProduct orderProduct = new ReadableOrderProduct();
 			orderProductPopulator.populate(p, orderProduct, store, language);
 
@@ -1083,7 +1083,7 @@ class OrderFacadeImpl implements OrderFacade {
 				ReadableOrderProductPopulator orderProductPopulator = new ReadableOrderProductPopulator();
 				orderProductPopulator.setProductService(productService);
 				orderProductPopulator.setPricingService(pricingService);
-				orderProductPopulator.setimageUtils(imageFilePath);
+				orderProductPopulator.setImageFilePath(imageFilePath);
 
 				ReadableOrderProduct orderProduct = new ReadableOrderProduct();
 				orderProductPopulator.populate(p, orderProduct, store, language);

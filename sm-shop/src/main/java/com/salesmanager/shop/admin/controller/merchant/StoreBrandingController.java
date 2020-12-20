@@ -10,6 +10,9 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -39,33 +42,20 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class StoreBrandingController {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(StoreBrandingController.class);
-	
-	
-	@Inject
-	MerchantStoreService merchantStoreService;
-	
-	@Inject
-	CountryService countryService;
-	
-	@Inject
-	ZoneService zoneService;
-	
-	@Inject
-	LanguageService languageService;
-	
-	@Inject
-	CurrencyService currencyService;
-	
-	@Inject
-	private ContentService contentService;
-	
+
+	private final MerchantStoreService merchantStoreService;
+	private final CountryService countryService;
+	private final ZoneService zoneService;
+	private final LanguageService languageService;
+	private final CurrencyService currencyService;
+	private final ContentService contentService;
 
 	@Resource(name="templates")
-	List<String> templates;
+	private final  List<String> templates;
 	
 	@PreAuthorize("hasRole('STORE')")
 	@RequestMapping(value="/admin/store/storeBranding.html", method=RequestMethod.GET)
@@ -183,7 +173,7 @@ public class StoreBrandingController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	

@@ -18,10 +18,10 @@ import com.salesmanager.shop.utils.ImageFilePath;
 
 
 public class ContentImageUrlTag extends RequestContextAwareTag {
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 6319855234657139862L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContentImageUrlTag.class);
@@ -32,17 +32,17 @@ public class ContentImageUrlTag extends RequestContextAwareTag {
 	
 	@Inject
 	private FilePathUtils filePathUtils;
-	
+
 	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 
 	public int doStartTagInternal() throws JspException {
 		try {
 
 
-			if (filePathUtils==null || imageUtils==null) {
+			if (filePathUtils==null || imageFilePath==null) {
 	            WebApplicationContext wac = getRequestContext().getWebApplicationContext();
 	            AutowireCapableBeanFactory factory = wac.getAutowireCapableBeanFactory();
 	            factory.autowireBean(this);
@@ -56,7 +56,7 @@ public class ContentImageUrlTag extends RequestContextAwareTag {
 				merchantStore = this.getMerchantStore();
 			}
 
-			String img = imageUtils.buildStaticImageUtils(merchantStore,this.getImageType(),this.getImageName());
+			String img = imageFilePath.buildStaticImageUtils(merchantStore,this.getImageType(),this.getImageName());
 
 			pageContext.getOut().print(img);
 

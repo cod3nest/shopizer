@@ -13,6 +13,8 @@ import com.salesmanager.shop.admin.controller.ControllerConstants;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.LabelUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -38,26 +40,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class CustomerOptionsSetController {
 	
-	@Inject
-	private LanguageService languageService;
-	
-	@Inject
-	private CustomerOptionSetService customerOptionSetService;
-	
-	@Inject
-	private CustomerOptionService customerOptionService;
-	
-	@Inject
-	private CustomerOptionValueService customerOptionValueService;
-	
-	@Inject
-	private LabelUtils messages;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerOptionsSetController.class);
-	
+	private final LanguageService languageService;
+	private final CustomerOptionSetService customerOptionSetService;
+	private final CustomerOptionService customerOptionService;
+	private final CustomerOptionValueService customerOptionValueService;
+	private final LabelUtils messages;
 	
 	@PreAuthorize("hasRole('CUSTOMER')")
 	@RequestMapping(value="/admin/customers/optionsset/list.html", method=RequestMethod.GET)
@@ -248,7 +240,7 @@ public class CustomerOptionsSetController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 		
 		
@@ -313,7 +305,7 @@ public class CustomerOptionsSetController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	
@@ -359,7 +351,7 @@ public class CustomerOptionsSetController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	

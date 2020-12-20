@@ -64,8 +64,8 @@ public class ContentApi {
 	private ContentFacade contentFacade;
 
 	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 	
 	@GetMapping(value = {"/private/content/pages", "/content/pages"}, produces = MediaType.APPLICATION_JSON_VALUE)

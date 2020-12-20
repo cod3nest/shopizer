@@ -343,13 +343,13 @@ public class MultipleEntryPointsSecurityConfig {
      */
     @Configuration
     @Order(6)
-    public static class CustomeApiConfigurationAdapter extends WebSecurityConfigurerAdapter {
+    public static class CustomerApiConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         private final AuthenticationTokenFilter authenticationTokenFilter;
         private final UserDetailsService jwtCustomerServicesImpl;
         private final PasswordEncoder passwordEncoder;
 
-        public CustomeApiConfigurationAdapter(AuthenticationTokenFilter authenticationTokenFilter, @Qualifier("jwtCustomerServicesImpl") UserDetailsService jwtCustomerServicesImpl, PasswordEncoder passwordEncoder) {
+        public CustomerApiConfigurationAdapter(AuthenticationTokenFilter authenticationTokenFilter, @Qualifier("jwtCustomerServicesImpl") UserDetailsService jwtCustomerServicesImpl, PasswordEncoder passwordEncoder) {
             super();
             this.authenticationTokenFilter = authenticationTokenFilter;
             this.jwtCustomerServicesImpl = jwtCustomerServicesImpl;

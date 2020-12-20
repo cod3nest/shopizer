@@ -16,6 +16,8 @@ import com.salesmanager.shop.admin.controller.ControllerConstants;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.CategoryUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -38,20 +40,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class RelatedItemsController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(RelatedItemsController.class);
-	
-	@Inject
-	CategoryService categoryService;
-	
-	@Inject
-	ProductService productService;
-	
-	@Inject
-	ProductRelationshipService productRelationshipService;
+	private final CategoryService categoryService;
+	private final ProductService productService;
+	private final ProductRelationshipService productRelationshipService;
 	
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/catalogue/related/list.html", method=RequestMethod.GET)
@@ -94,7 +90,7 @@ public class RelatedItemsController {
 		String sProductId = request.getParameter("productId");
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		try {
 			
@@ -164,7 +160,7 @@ public class RelatedItemsController {
 		String baseProductId = request.getParameter("baseProductId");
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		try {
 			
@@ -234,7 +230,7 @@ public class RelatedItemsController {
 		String baseProductId = request.getParameter("baseProductId");
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		try {
 			

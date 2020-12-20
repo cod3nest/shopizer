@@ -57,8 +57,8 @@ public class EmailTemplatesUtils {
 	private PricingService pricingService;
 	
 	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 	
 	@Inject
 	private EmailUtils emailUtils;

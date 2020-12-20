@@ -62,8 +62,8 @@ public class ContentAdministrationApi {
 	
 	
 	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 	
 	/**
 	 * Works with ng-file-man client
@@ -226,9 +226,9 @@ public class ContentAdministrationApi {
 	private ImageFile convertToImageFile(MerchantStore store, Content content) {
 		ImageFile f = new ImageFile();
 		f.setDir(false);
-		f.setId(imageUtils.buildStaticImageUtils(store, content.getName()));
+		f.setId(imageFilePath.buildStaticImageUtils(store, content.getName()));
 		f.setName(content.getName());
-		f.setUrl(imageUtils.buildStaticImageUtils(store, content.getName()));
+		f.setUrl(imageFilePath.buildStaticImageUtils(store, content.getName()));
 		f.setPath("image.png");
 		f.setSize(null);
 		return f;

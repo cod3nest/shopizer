@@ -52,8 +52,8 @@ class SearchFacadeImpl implements SearchFacade {
 	private final ProductService productService;
 	private final CategoryService categoryService;
 	private final PricingService pricingService;
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 	private final static String CATEGORY_FACET_NAME = "categories";
 	private final static String MANUFACTURER_FACET_NAME = "manufacturer";
@@ -179,7 +179,7 @@ class SearchFacadeImpl implements SearchFacade {
 
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 
 		try {
 			return populator.populate(product, new ReadableProduct(), merchantStore, language);

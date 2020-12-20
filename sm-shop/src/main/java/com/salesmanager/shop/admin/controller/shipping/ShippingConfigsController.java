@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,18 +38,13 @@ import com.salesmanager.core.model.shipping.ShippingType;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 
-
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ShippingConfigsController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingConfigsController.class);
-
-	
-	@Inject
-	private ShippingService shippingService;
-	
-	@Inject
-	private CountryService countryService;
+	private final ShippingService shippingService;
+	private final CountryService countryService;
 	
 	/**
 	 * Configures the shipping mode, shows shipping countries
@@ -157,7 +154,7 @@ public class ShippingConfigsController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	
@@ -209,7 +206,7 @@ public class ShippingConfigsController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,44 +61,26 @@ import com.salesmanager.shop.utils.LabelUtils;
 import com.salesmanager.shop.utils.LocaleUtils;
 import com.salesmanager.shop.utils.UserUtils;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class UserController {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-	
-	@Inject
-	private LanguageService languageService;
-	
-	@Inject
-	private UserService userService;
 
-	@Inject
-	private GroupService groupService;
-
-	@Inject
-	private EmailService emailService;
-	
-	@Inject
-	private MerchantStoreService merchantStoreService;
-	
-	@Inject
-	LabelUtils messages;
-	
-	@Inject
-	private FilePathUtils filePathUtils;
-	
-	@Inject
-	private EmailUtils emailUtils;
-	
-	@Inject
-	@Named("passwordEncoder")
-	private PasswordEncoder passwordEncoder;
-	
 	private final static String QUESTION_1 = "question1";
 	private final static String QUESTION_2 = "question2";
 	private final static String QUESTION_3 = "question3";
-	private final static String RESET_PASSWORD_TPL = "email_template_password_reset_user.ftl";	
+	private final static String RESET_PASSWORD_TPL = "email_template_password_reset_user.ftl";
 	private final static String NEW_USER_TMPL = "email_template_new_user.ftl";
+
+	private final LanguageService languageService;
+	private final UserService userService;
+	private final GroupService groupService;
+	private final EmailService emailService;
+	private final MerchantStoreService merchantStoreService;
+	private final LabelUtils messages;
+	private final FilePathUtils filePathUtils;
+	private final EmailUtils emailUtils;
+	private final PasswordEncoder passwordEncoder;
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/admin/users/list.html", method=RequestMethod.GET)
@@ -406,7 +390,7 @@ public class UserController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		try {
 			
@@ -641,7 +625,7 @@ public class UserController {
 
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		String userName = request.getRemoteUser();
 		User remoteUser = userService.getByUserName(userName);
@@ -728,7 +712,7 @@ public class UserController {
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 	    
 		String userName = request.getParameter("username");
 		
@@ -859,7 +843,7 @@ public class UserController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	

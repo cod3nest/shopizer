@@ -34,13 +34,13 @@ public class ManufacturerImageUrlTag extends RequestContextAwareTag {
 	private Manufacturer manufacturer;
 	
 	private FilePathUtils filePathUtils;
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 	public int doStartTagInternal() throws JspException {
 		try {
 			
-			if (filePathUtils==null || imageUtils==null) {
+			if (filePathUtils==null || imageFilePath==null) {
 	            WebApplicationContext wac = getRequestContext().getWebApplicationContext();
 	            AutowireCapableBeanFactory factory = wac.getAutowireCapableBeanFactory();
 	            factory.autowireBean(this);

@@ -40,8 +40,7 @@ public class ShopProductRelationshipTag extends RequestContextAwareTag  {
 	private ProductRelationshipService productRelationshipService;
 	private PricingService pricingService;
 	private CacheUtils cache;
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+	private ImageFilePath imageFilePath;
 	
 	private String groupName;
 
@@ -58,7 +57,7 @@ public class ShopProductRelationshipTag extends RequestContextAwareTag  {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected int doStartTagInternal() throws Exception {
-		if (productRelationshipService == null || pricingService==null || imageUtils==null) {
+		if (productRelationshipService == null || pricingService==null || imageFilePath==null) {
 			LOGGER.debug("Autowiring ProductRelationshipService");
             WebApplicationContext wac = getRequestContext().getWebApplicationContext();
             AutowireCapableBeanFactory factory = wac.getAutowireCapableBeanFactory();
@@ -131,7 +130,7 @@ public class ShopProductRelationshipTag extends RequestContextAwareTag  {
 		
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		
 		List<ReadableProduct> products = new ArrayList<ReadableProduct>();
 		for(ProductRelationship relationship : relationships) {

@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.inject.Inject;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +34,14 @@ import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.LabelUtils;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ShippingOptionsController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingOptionsController.class);
-
-	private ShippingService shippingService;
-	private LabelUtils messages;
-	private ProductPriceUtils priceUtil;
+	private final ShippingService shippingService;
+	private final LabelUtils messages;
+	private final ProductPriceUtils priceUtil;
 	
 	/**
 	 * Displays shipping options

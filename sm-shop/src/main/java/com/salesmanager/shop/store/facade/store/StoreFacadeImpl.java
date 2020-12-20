@@ -60,8 +60,8 @@ class StoreFacadeImpl implements StoreFacade {
 	private final ContentService contentService;
 	private final PersistableMerchantStorePopulator persistableMerchantStorePopulator;
 	private final LanguageUtils languageUtils;
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 	@Override
 	public MerchantStore getByCode(HttpServletRequest request) {
@@ -126,7 +126,7 @@ class StoreFacadeImpl implements StoreFacade {
 		ReadableMerchantStorePopulator populator = new ReadableMerchantStorePopulator();
 		populator.setCountryService(countryService);
 		populator.setZoneService(zoneService);
-		populator.setFilePath(imageUtils);
+		populator.setFilePath(imageFilePath);
 
 		/**
 		 * Language is not important for this conversion using default language
@@ -144,7 +144,7 @@ class StoreFacadeImpl implements StoreFacade {
 		ReadableMerchantStorePopulatorWithDetails populator = new ReadableMerchantStorePopulatorWithDetails();
 		populator.setCountryService(countryService);
 		populator.setZoneService(zoneService);
-		populator.setFilePath(imageUtils);
+		populator.setFilePath(imageFilePath);
 
 		/**
 		 * Language is not important for this conversion using default language
@@ -295,7 +295,7 @@ class StoreFacadeImpl implements StoreFacade {
 
 		ReadableBrand readableBrand = new ReadableBrand();
 		if (!StringUtils.isEmpty(mStore.getStoreLogo())) {
-			String imagePath = imageUtils.buildStoreLogoFilePath(mStore);
+			String imagePath = imageFilePath.buildStoreLogoFilePath(mStore);
 			ReadableImage image = createReadableImage(mStore.getStoreLogo(), imagePath);
 			readableBrand.setLogo(image);
 		}

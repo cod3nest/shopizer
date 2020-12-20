@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -34,16 +35,14 @@ import com.salesmanager.shop.model.shoppingcart.ReadableShoppingCartItem;
 import com.salesmanager.shop.populator.catalog.ReadableProductPopulator;
 import com.salesmanager.shop.utils.ImageFilePath;
 
+@Slf4j
 public class ReadableShoppingCartPopulator extends AbstractDataPopulator<ShoppingCart, ReadableShoppingCart> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ReadableShoppingCartPopulator.class);
-	
 	private PricingService pricingService;
     private ShoppingCartCalculationService shoppingCartCalculationService;
     private ProductAttributeService productAttributeService;
-    
-    private ImageFilePath imageUtils;
-	
+    private ImageFilePath imageFilePath;
+
 	@Override
 	public ReadableShoppingCart populate(ShoppingCart source, ReadableShoppingCart target, MerchantStore store,
 			Language language) throws ConversionException {
@@ -53,7 +52,7 @@ public class ReadableShoppingCartPopulator extends AbstractDataPopulator<Shoppin
     	Validate.notNull(pricingService, "Requires to set pricingService");
     	Validate.notNull(productAttributeService, "Requires to set productAttributeService");
     	Validate.notNull(shoppingCartCalculationService, "Requires to set shoppingCartCalculationService");
-    	Validate.notNull(imageUtils, "Requires to set imageUtils");
+    	Validate.notNull(imageFilePath, "Requires to set imageUtils");
     	
     	if(target == null) {
     		target = new ReadableShoppingCart();
@@ -76,7 +75,7 @@ public class ReadableShoppingCartPopulator extends AbstractDataPopulator<Shoppin
 
                 	ReadableProductPopulator readableProductPopulator = new ReadableProductPopulator();
                 	readableProductPopulator.setPricingService(pricingService);
-                	readableProductPopulator.setimageUtils(imageUtils);
+                	readableProductPopulator.setImageFilePath(imageFilePath);
                 	readableProductPopulator.populate(item.getProduct(), shoppingCartItem,  store, language);
 
 
@@ -236,11 +235,11 @@ public class ReadableShoppingCartPopulator extends AbstractDataPopulator<Shoppin
 	}
 
 	public ImageFilePath getImageUtils() {
-		return imageUtils;
+		return imageFilePath;
 	}
 
-	public void setImageUtils(ImageFilePath imageUtils) {
-		this.imageUtils = imageUtils;
+	public void setImageFilePath(ImageFilePath imageFilePath) {
+		this.imageFilePath = imageFilePath;
 	}
 
 	public ProductAttributeService getProductAttributeService() {

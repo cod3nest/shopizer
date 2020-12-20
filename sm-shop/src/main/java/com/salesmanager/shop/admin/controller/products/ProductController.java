@@ -31,6 +31,8 @@ import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.CategoryUtils;
 import com.salesmanager.shop.utils.DateUtil;
 import com.salesmanager.shop.utils.LabelUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,19 +56,20 @@ import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ProductController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
-	private ProductService productService;
-	private ManufacturerService manufacturerService;
-	private ProductTypeService productTypeService;
-	private ProductImageService productImageService;
-	private TaxClassService taxClassService;
-	private ProductPriceUtils priceUtil;
-	private LabelUtils messages;
-	private CoreConfiguration configuration;
-	private CategoryService categoryService;
+	private final  ProductService productService;
+	private final  ManufacturerService manufacturerService;
+	private final  ProductTypeService productTypeService;
+	private final  ProductImageService productImageService;
+	private final  TaxClassService taxClassService;
+	private final  ProductPriceUtils priceUtil;
+	private final  LabelUtils messages;
+	private final  CoreConfiguration configuration;
+	private final  CategoryService categoryService;
 
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/products/editProduct.html", method=RequestMethod.GET)
@@ -777,7 +780,7 @@ public class ProductController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	
@@ -841,7 +844,7 @@ public class ProductController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		Long productId;
 		Product product = null;
@@ -923,7 +926,7 @@ public class ProductController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		
 		try {

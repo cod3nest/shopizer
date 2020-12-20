@@ -105,7 +105,7 @@ public class LandingController {
 		
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageFilePath);
+		populator.setImageFilePath(imageFilePath);
 
 		
 		//featured items

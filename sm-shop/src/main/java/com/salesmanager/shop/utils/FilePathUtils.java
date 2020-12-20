@@ -1,5 +1,18 @@
 package com.salesmanager.shop.utils;
 
+import com.salesmanager.core.business.utils.CoreConfiguration;
+import com.salesmanager.core.model.catalog.product.file.DigitalProduct;
+import com.salesmanager.core.model.content.FileContentType;
+import com.salesmanager.core.model.merchant.MerchantStore;
+import com.salesmanager.shop.constants.Constants;
+import com.salesmanager.shop.model.order.ReadableOrderProductDownload;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Properties;
+
 import static com.salesmanager.shop.constants.ApplicationConstants.SHOP_SCHEME;
 import static com.salesmanager.shop.constants.Constants.ADMIN_URI;
 import static com.salesmanager.shop.constants.Constants.BLANK;
@@ -13,22 +26,6 @@ import static com.salesmanager.shop.constants.Constants.SLASH;
 import static com.salesmanager.shop.constants.Constants.STATIC_URI;
 import static com.salesmanager.shop.constants.Constants.URL_EXTENSION;
 
-import java.util.Properties;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-
-import com.salesmanager.core.business.utils.CoreConfiguration;
-import com.salesmanager.core.model.catalog.product.file.DigitalProduct;
-import com.salesmanager.core.model.content.FileContentType;
-import com.salesmanager.core.model.merchant.MerchantStore;
-import com.salesmanager.shop.constants.Constants;
-import com.salesmanager.shop.model.order.ReadableOrderProductDownload;
-
 @Component
 public class FilePathUtils {
 
@@ -38,9 +35,7 @@ public class FilePathUtils {
 	private static final String HTTP_VALUE = "http";
 
 	private CoreConfiguration coreConfiguration;
-
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+	private ImageFilePath imageFilePath;
 
 	@Resource(name = "shopizer-properties")
 	public Properties properties = new Properties();
@@ -94,9 +89,9 @@ public class FilePathUtils {
 	 * Or example: /<shopScheme>://<domainName>/<contextPath>/files/<storeCode>/
 	 */
 	public String buildStaticFileAbsolutePath(MerchantStore store, String fileName) {
-		if (StringUtils.isNotBlank(imageUtils.getBasePath())
-				&& imageUtils.getBasePath().startsWith(HTTP_SCHEME)) {
-			return imageUtils.getBasePath()
+		if (StringUtils.isNotBlank(imageFilePath.getBasePath())
+				&& imageFilePath.getBasePath().startsWith(HTTP_SCHEME)) {
+			return imageFilePath.getBasePath()
 					+ FILES_URI
 					+ SLASH
 					+ store.getCode()

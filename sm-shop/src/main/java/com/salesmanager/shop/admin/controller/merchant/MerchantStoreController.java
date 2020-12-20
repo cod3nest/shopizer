@@ -23,6 +23,8 @@ import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.constants.EmailConstants;
 import com.salesmanager.shop.utils.*;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -47,42 +49,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class MerchantStoreController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MerchantStoreController.class);
-
-	@Inject
-	private MerchantStoreService merchantStoreService;
-
-	@Inject
-	private CountryService countryService;
-
-	@Inject
-	private ZoneService zoneService;
-
-	@Inject
-	private LanguageService languageService;
-
-	@Inject
-	private CurrencyService currencyService;
-
-	@Inject
-	private UserService userService;
-
-	@Inject
-	private LabelUtils messages;
-
-	@Inject
-	private EmailService emailService;
-
-	@Inject
-	private EmailUtils emailUtils;
-
-	@Inject
-	private FilePathUtils filePathUtils;
-
 	private final static String NEW_STORE_TMPL = "email_template_new_store.ftl";
+
+	private final MerchantStoreService merchantStoreService;
+	private final CountryService countryService;
+	private final ZoneService zoneService;
+	private final LanguageService languageService;
+	private final CurrencyService currencyService;
+	private final UserService userService;
+	private final LabelUtils messages;
+	private final EmailService emailService;
+	private final EmailUtils emailUtils;
+	private final FilePathUtils filePathUtils;
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/admin/store/list.html", method = RequestMethod.GET)
@@ -126,7 +109,7 @@ public class MerchantStoreController {
 		String returnString = resp.toJSONString();
 
 		final HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString, httpHeaders, HttpStatus.OK);
 	}
 
@@ -374,7 +357,7 @@ public class MerchantStoreController {
 		AjaxResponse resp = new AjaxResponse();
 
 		final HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		try {
 
@@ -412,7 +395,7 @@ public class MerchantStoreController {
 
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		try {
 

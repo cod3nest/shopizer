@@ -67,8 +67,8 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
     private final ProductService productService;
     private final PricingService pricingService;
     private final ProductAttributeService productAttributeService;
-    @Qualifier("imageFilePath")
-    private ImageFilePath imageUtils;
+
+    private ImageFilePath imageFilePath;
 
     public void deleteShoppingCart(final Long id, final MerchantStore store) throws Exception {
         ShoppingCart cart = shoppingCartService.getById(id, store);
@@ -157,7 +157,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
         ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
         shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
         shoppingCartDataPopulator.setPricingService(pricingService);
-        shoppingCartDataPopulator.setimageUtils(imageUtils);
+        shoppingCartDataPopulator.setImageFilePath(imageFilePath);
 
 
         return shoppingCartDataPopulator.populate(cartModel, store, language);
@@ -470,7 +470,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
         ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
         shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
         shoppingCartDataPopulator.setPricingService(pricingService);
-        shoppingCartDataPopulator.setimageUtils(imageUtils);
+        shoppingCartDataPopulator.setImageFilePath(imageFilePath);
 
         //Language language = (Language) getKeyValue( Constants.LANGUAGE );
         MerchantStore merchantStore = (MerchantStore) getKeyValue(Constants.MERCHANT_STORE);
@@ -508,7 +508,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
         ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
         shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
         shoppingCartDataPopulator.setPricingService(pricingService);
-        shoppingCartDataPopulator.setimageUtils(imageUtils);
+        shoppingCartDataPopulator.setImageFilePath(imageFilePath);
         //Language language = (Language) getKeyValue( Constants.LANGUAGE );
         MerchantStore merchantStore = (MerchantStore) getKeyValue(Constants.MERCHANT_STORE);
         return shoppingCartDataPopulator.populate(shoppingCartModel, merchantStore, language);
@@ -538,7 +538,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
                     ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
                     shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
                     shoppingCartDataPopulator.setPricingService(pricingService);
-                    shoppingCartDataPopulator.setimageUtils(imageUtils);
+                    shoppingCartDataPopulator.setImageFilePath(imageFilePath);
                     return shoppingCartDataPopulator.populate(cartModel, store, language);
 
 
@@ -579,7 +579,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
                 ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
                 shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
                 shoppingCartDataPopulator.setPricingService(pricingService);
-                shoppingCartDataPopulator.setimageUtils(imageUtils);
+                shoppingCartDataPopulator.setImageFilePath(imageFilePath);
                 return shoppingCartDataPopulator.populate(cartModel, store, language);
 
             }
@@ -644,7 +644,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
         ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
         shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
         shoppingCartDataPopulator.setPricingService(pricingService);
-        shoppingCartDataPopulator.setimageUtils(imageUtils);
+        shoppingCartDataPopulator.setImageFilePath(imageFilePath);
         return shoppingCartDataPopulator.populate(cartModel, store, language);
 
     }
@@ -726,7 +726,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
         ReadableShoppingCartPopulator readableShoppingCart = new ReadableShoppingCartPopulator();
 
-        readableShoppingCart.setImageUtils(imageUtils);
+        readableShoppingCart.setImageFilePath(imageFilePath);
         readableShoppingCart.setPricingService(pricingService);
         readableShoppingCart.setProductAttributeService(productAttributeService);
         readableShoppingCart.setShoppingCartCalculationService(shoppingCartCalculationService);
@@ -846,7 +846,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
         ReadableShoppingCartPopulator readableShoppingCart = new ReadableShoppingCartPopulator();
 
-        readableShoppingCart.setImageUtils(imageUtils);
+        readableShoppingCart.setImageFilePath(imageFilePath);
         readableShoppingCart.setPricingService(pricingService);
         readableShoppingCart.setProductAttributeService(productAttributeService);
         readableShoppingCart.setShoppingCartCalculationService(shoppingCartCalculationService);
@@ -928,7 +928,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
         ReadableShoppingCartPopulator readableShoppingCart = new ReadableShoppingCartPopulator();
 
-        readableShoppingCart.setImageUtils(imageUtils);
+        readableShoppingCart.setImageFilePath(imageFilePath);
         readableShoppingCart.setPricingService(pricingService);
         readableShoppingCart.setProductAttributeService(productAttributeService);
         readableShoppingCart.setShoppingCartCalculationService(shoppingCartCalculationService);
@@ -1008,7 +1008,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
         ReadableShoppingCartPopulator readableShoppingCart = new ReadableShoppingCartPopulator();
 
-        readableShoppingCart.setImageUtils(imageUtils);
+        readableShoppingCart.setImageFilePath(imageFilePath);
         readableShoppingCart.setPricingService(pricingService);
         readableShoppingCart.setProductAttributeService(productAttributeService);
         readableShoppingCart.setShoppingCartCalculationService(shoppingCartCalculationService);
@@ -1096,7 +1096,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
             ReadableShoppingCartPopulator readableShoppingCart = new ReadableShoppingCartPopulator();
 
-            readableShoppingCart.setImageUtils(imageUtils);
+            readableShoppingCart.setImageFilePath(imageFilePath);
             readableShoppingCart.setPricingService(pricingService);
             readableShoppingCart.setProductAttributeService(productAttributeService);
             readableShoppingCart.setShoppingCartCalculationService(shoppingCartCalculationService);
@@ -1125,7 +1125,7 @@ class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
             ReadableShoppingCartPopulator readableShoppingCart = new ReadableShoppingCartPopulator();
 
-            readableShoppingCart.setImageUtils(imageUtils);
+            readableShoppingCart.setImageFilePath(imageFilePath);
             readableShoppingCart.setPricingService(pricingService);
             readableShoppingCart.setProductAttributeService(productAttributeService);
             readableShoppingCart.setShoppingCartCalculationService(shoppingCartCalculationService);

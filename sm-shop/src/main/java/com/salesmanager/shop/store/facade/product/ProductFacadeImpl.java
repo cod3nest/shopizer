@@ -78,8 +78,8 @@ class ProductFacadeImpl implements ProductFacade {
 	private final ProductRelationshipService productRelationshipService;
 	private final PersistableProductPopulator persistableProductPopulator;
 
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 	@Override
 	public PersistableProduct saveProduct(MerchantStore store, PersistableProduct product, Language language) {
@@ -161,7 +161,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProduct readableProduct = new ReadableProduct();
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		readableProduct = populator.populate(product, readableProduct, store, language);
 
 		return readableProduct;
@@ -181,7 +181,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		populator.populate(product, readableProduct, store, language);
 
 		return readableProduct;
@@ -222,7 +222,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		populator.populate(persistable, readableProduct, persistable.getMerchantStore(), language);
 
 		return readableProduct;
@@ -249,7 +249,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		populator.populate(persistable, readableProduct, persistable.getMerchantStore(), language);
 
 		return readableProduct;
@@ -306,7 +306,7 @@ class ProductFacadeImpl implements ProductFacade {
 		
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 
 		ReadableProductList productList = new ReadableProductList();
 		for (Product product : products) {
@@ -352,7 +352,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		populator.populate(product, readableProduct, product.getMerchantStore(), language);
 
 		return readableProduct;
@@ -374,7 +374,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		populator.populate(product, readableProduct, product.getMerchantStore(), language);
 
 		return readableProduct;
@@ -391,7 +391,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		populator.populate(product, readableProduct, product.getMerchantStore(), language);
 
 		return readableProduct;
@@ -448,7 +448,7 @@ class ProductFacadeImpl implements ProductFacade {
 			throws Exception {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 
 		List<ProductRelationship> relatedItems = productRelationshipService.getByType(store, product,
 				ProductRelationshipType.RELATED_ITEM);
@@ -551,7 +551,7 @@ class ProductFacadeImpl implements ProductFacade {
 		ReadableProductPopulator populator = new ReadableProductPopulator();
 
 		populator.setPricingService(pricingService);
-		populator.setimageUtils(imageUtils);
+		populator.setImageFilePath(imageFilePath);
 		populator.populate(product, readableProduct, store, language);
 
 		return readableProduct;

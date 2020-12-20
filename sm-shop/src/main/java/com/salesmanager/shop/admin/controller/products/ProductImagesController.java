@@ -13,6 +13,8 @@ import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.ImageFilePath;
 import com.salesmanager.shop.utils.LabelUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,16 +37,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ProductImagesController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductImagesController.class);
-
-	private ProductService productService;
-	private ProductImageService productImageService;
-	private LabelUtils messages;
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+	private final ProductService productService;
+	private final ProductImageService productImageService;
+	private final LabelUtils messages;
+	private final ImageFilePath imageFilePath;
 
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/products/images/list.html", method=RequestMethod.GET)
@@ -112,7 +113,7 @@ public class ProductImagesController {
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		Long productId;
 		Product product = null;
@@ -147,7 +148,7 @@ public class ProductImagesController {
 				
 				for(ProductImage image : images) {
 					
-						String imagePath = imageUtils.buildProductImageUtils(store, product, image.getProductImage());
+						String imagePath = imageFilePath.buildProductImageUtils(store, product, image.getProductImage());
 						
 						Map entry = new HashMap();
 						//entry.put("picture", new StringBuilder().append(request.getContextPath()).append(imagePath).toString());
@@ -187,7 +188,7 @@ public class ProductImagesController {
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		Long productId;
 		Product product = null;
@@ -377,7 +378,7 @@ public class ProductImagesController {
 		MerchantStore store = (MerchantStore)request.getAttribute(Constants.ADMIN_STORE);
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		
 		try {
@@ -427,7 +428,7 @@ public class ProductImagesController {
 		final MerchantStore store = (MerchantStore)request.getAttribute(Constants.ADMIN_STORE);
 		final AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		try {
 			final Long imageId = Long.parseLong(sImageId);

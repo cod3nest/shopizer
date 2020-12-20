@@ -40,13 +40,12 @@ public class ShopProductImageUrlTag extends RequestContextAwareTag {
 	private FilePathUtils filePathUtils;
 	
 	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+	private ImageFilePath imageFilePath;
 	
 	public int doStartTagInternal() throws JspException {
 		try {
 			
-			if (filePathUtils==null || imageUtils==null) {
+			if (filePathUtils==null || imageFilePath==null) {
 	            WebApplicationContext wac = getRequestContext().getWebApplicationContext();
 	            AutowireCapableBeanFactory factory = wac.getAutowireCapableBeanFactory();
 	            factory.autowireBean(this);
@@ -63,9 +62,9 @@ public class ShopProductImageUrlTag extends RequestContextAwareTag {
 			imagePath.append(baseUrl);
 			
 			if(StringUtils.isBlank(this.getSize()) || this.getSize().equals(SMALL)) {
-				imagePath.append(imageUtils.buildProductImageUtils(merchantStore, this.getSku(), this.getImageName())).toString();
+				imagePath.append(imageFilePath.buildProductImageUtils(merchantStore, this.getSku(), this.getImageName())).toString();
 			} else {
-				imagePath.append(imageUtils.buildLargeProductImageUtils(merchantStore, this.getSku(), this.getImageName())).toString();
+				imagePath.append(imageFilePath.buildLargeProductImageUtils(merchantStore, this.getSku(), this.getImageName())).toString();
 			}
 
 			//System.out.println("Printing image -M " + imagePath.toString());

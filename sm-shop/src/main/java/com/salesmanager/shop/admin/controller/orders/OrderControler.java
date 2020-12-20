@@ -32,6 +32,8 @@ import com.salesmanager.shop.utils.DateUtil;
 import com.salesmanager.shop.utils.EmailUtils;
 import com.salesmanager.shop.utils.LabelUtils;
 import com.salesmanager.shop.utils.LocaleUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -59,6 +61,8 @@ import java.util.regex.Pattern;
  * @author Carl Samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class OrderControler {
 	

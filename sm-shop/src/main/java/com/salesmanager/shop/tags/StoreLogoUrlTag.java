@@ -1,8 +1,9 @@
 package com.salesmanager.shop.tags;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-
+import com.salesmanager.core.model.merchant.MerchantStore;
+import com.salesmanager.shop.constants.Constants;
+import com.salesmanager.shop.utils.FilePathUtils;
+import com.salesmanager.shop.utils.ImageFilePath;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +12,8 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
-import com.salesmanager.core.model.merchant.MerchantStore;
-import com.salesmanager.shop.constants.Constants;
-import com.salesmanager.shop.utils.FilePathUtils;
-import com.salesmanager.shop.utils.ImageFilePath;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 public class StoreLogoUrlTag extends RequestContextAwareTag {
 	
@@ -29,13 +28,12 @@ public class StoreLogoUrlTag extends RequestContextAwareTag {
 	private static final String SHOPIZER_LOGO = "shopizer_small.png";
 	
 	private FilePathUtils filePathUtils;
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+	private ImageFilePath imageFilePath;
 
 	public int doStartTagInternal() throws JspException {
 		try {
 			
-			if (filePathUtils==null || imageUtils!=null) {
+			if (filePathUtils==null || imageFilePath!=null) {
 	            WebApplicationContext wac = getRequestContext().getWebApplicationContext();
 	            AutowireCapableBeanFactory factory = wac.getAutowireCapableBeanFactory();
 	            factory.autowireBean(this);
@@ -59,7 +57,7 @@ public class StoreLogoUrlTag extends RequestContextAwareTag {
 			} else {
 				
 				imagePath
-					.append(imageUtils.buildStoreLogoFilePath(merchantStore));
+					.append(imageFilePath.buildStoreLogoFilePath(merchantStore));
 				
 			}
 

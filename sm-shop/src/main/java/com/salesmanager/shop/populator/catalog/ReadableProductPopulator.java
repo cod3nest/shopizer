@@ -1,16 +1,5 @@
 package com.salesmanager.shop.populator.catalog;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang3.StringUtils;
-
 import com.salesmanager.core.business.exception.ConversionException;
 import com.salesmanager.core.business.services.catalog.product.PricingService;
 import com.salesmanager.core.business.utils.AbstractDataPopulator;
@@ -44,38 +33,31 @@ import com.salesmanager.shop.model.catalog.product.attribute.api.ReadableProduct
 import com.salesmanager.shop.model.catalog.product.type.ReadableProductType;
 import com.salesmanager.shop.utils.DateUtil;
 import com.salesmanager.shop.utils.ImageFilePath;
+import lombok.Data;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
 
 
-
-public class ReadableProductPopulator extends
-		AbstractDataPopulator<Product, ReadableProduct> {
+@Data
+public class ReadableProductPopulator extends AbstractDataPopulator<Product, ReadableProduct> {
 	
 	private PricingService pricingService;
-	
-	private ImageFilePath imageUtils;
-
-	public ImageFilePath getimageUtils() {
-		return imageUtils;
-	}
-
-	public void setimageUtils(ImageFilePath imageUtils) {
-		this.imageUtils = imageUtils;
-	}
-
-	public PricingService getPricingService() {
-		return pricingService;
-	}
-
-	public void setPricingService(PricingService pricingService) {
-		this.pricingService = pricingService;
-	}
+	private ImageFilePath imageFilePath;
 
 	@Override
 	public ReadableProduct populate(Product source,
 			ReadableProduct target, MerchantStore store, Language language)
 			throws ConversionException {
 		Validate.notNull(pricingService, "Requires to set PricingService");
-		Validate.notNull(imageUtils, "Requires to set imageUtils");
+		Validate.notNull(imageFilePath, "Requires to set imageUtils");
 
 		
 		try {
@@ -221,7 +203,7 @@ public class ReadableProductPopulator extends
 			if(images!=null && images.size()>0) {
 				List<ReadableImage> imageList = new ArrayList<ReadableImage>();
 				
-				String contextPath = imageUtils.getContextPath();
+				String contextPath = imageFilePath.getContextPath();
 				
 				for(ProductImage img : images) {
 					ReadableImage prdImage = new ReadableImage();
@@ -229,7 +211,7 @@ public class ReadableProductPopulator extends
 					prdImage.setDefaultImage(img.isDefaultImage());
 
 					StringBuilder imgPath = new StringBuilder();
-					imgPath.append(contextPath).append(imageUtils.buildProductImageUtils(store, source.getSku(), img.getProductImage()));
+					imgPath.append(contextPath).append(imageFilePath.buildProductImageUtils(store, source.getSku(), img.getProductImage()));
 
 					prdImage.setImageUrl(imgPath.toString());
 					prdImage.setId(img.getId());
@@ -361,7 +343,7 @@ public class ReadableProductPopulator extends
 								}
 								
 								if(!StringUtils.isBlank(attribute.getProductOptionValue().getProductOptionValueImage())) {
-									optValue.setImage(imageUtils.buildProductPropertyImageUtils(store, attribute.getProductOptionValue().getProductOptionValueImage()));
+									optValue.setImage(imageFilePath.buildProductPropertyImageUtils(store, attribute.getProductOptionValue().getProductOptionValueImage()));
 								}
 								optValue.setSortOrder(0);
 								if(attribute.getProductOptionSortOrder()!=null) {

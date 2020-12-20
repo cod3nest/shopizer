@@ -10,6 +10,8 @@ import com.salesmanager.shop.admin.controller.ControllerConstants;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.LabelUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,17 +28,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ShippingMethodsController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingMethodsController.class);
-	
-
-	@Inject
-	private ShippingService shippingService;
-	
-	@Inject
-	LabelUtils messages;
+	private final ShippingService shippingService;
+	private final LabelUtils messages;
 	
 	/**
 	 * Configures the shipping shows shipping methods

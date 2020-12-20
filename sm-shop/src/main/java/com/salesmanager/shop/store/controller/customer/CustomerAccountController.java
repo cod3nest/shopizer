@@ -270,7 +270,7 @@ public class CustomerAccountController extends AbstractController {
 
         AjaxResponse resp = new AjaxResponse();
         final HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         MerchantStore store = (MerchantStore) request.getAttribute(Constants.MERCHANT_STORE);
 

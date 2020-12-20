@@ -12,6 +12,8 @@ import com.salesmanager.shop.admin.controller.ControllerConstants;
 import com.salesmanager.shop.admin.model.digital.ProductFiles;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,8 @@ import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class DigitalProductController {
 	
@@ -125,7 +129,7 @@ public class DigitalProductController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		
 		try {

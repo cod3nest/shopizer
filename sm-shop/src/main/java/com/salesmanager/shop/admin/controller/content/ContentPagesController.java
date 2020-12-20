@@ -14,6 +14,8 @@ import com.salesmanager.shop.admin.controller.ControllerConstants;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,21 +36,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ContentPagesController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ContentPagesController.class);
-	
-	@Inject
-	private ContentService contentService;
-	
-	@Inject
-	LanguageService languageService;
-	
-	@Inject
-	ProductRelationshipService productRelationshipService;
-	
-	
+	private final ContentService contentService;
+	private final  LanguageService languageService;
+	private final  ProductRelationshipService productRelationshipService;
+
 	@PreAuthorize("hasRole('CONTENT')")
 	@RequestMapping(value="/admin/content/pages/list.html", method=RequestMethod.GET)
 	public String listContentPages(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -155,7 +151,7 @@ public class ContentPagesController {
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		
 		try {
@@ -249,7 +245,7 @@ public class ContentPagesController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	
@@ -316,7 +312,7 @@ public class ContentPagesController {
 
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		   if(StringUtils.isBlank(code)) {
 				resp.setStatus(AjaxResponse.CODE_ALREADY_EXIST);

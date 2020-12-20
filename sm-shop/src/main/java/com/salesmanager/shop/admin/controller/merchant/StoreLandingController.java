@@ -13,6 +13,8 @@ import com.salesmanager.shop.admin.model.merchant.StoreLanding;
 import com.salesmanager.shop.admin.model.merchant.StoreLandingDescription;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,17 +32,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class StoreLandingController {
 	
-	@Inject
-	MerchantStoreService merchantStoreService;
-
-	@Inject
-	LanguageService languageService;
-	
-	@Inject
-	ContentService contentService;
+	private final MerchantStoreService merchantStoreService;
+	private final LanguageService languageService;
+	private final ContentService contentService;
 	
 	@PreAuthorize("hasRole('STORE')")
 	@RequestMapping(value="/admin/store/storeLanding.html", method=RequestMethod.GET)

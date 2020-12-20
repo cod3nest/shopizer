@@ -22,6 +22,8 @@ import com.salesmanager.shop.utils.DateUtil;
 import com.salesmanager.shop.utils.EmailTemplatesUtils;
 import com.salesmanager.shop.utils.LabelUtils;
 import com.salesmanager.shop.utils.LocaleUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -46,6 +48,8 @@ import java.util.*;
  * Manage order details
  * @author Carl Samson
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class OrderActionsControler {
 	
@@ -94,7 +98,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OrderActionsControl
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		try {
 			Long id = Long.parseLong(sId);
@@ -154,7 +158,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OrderActionsControl
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		BigDecimal submitedAmount = null;
 		
@@ -297,7 +301,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OrderActionsControl
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		if(sId==null) {
 			resp.setStatus(AjaxResponse.RESPONSE_STATUS_FAIURE);
@@ -374,7 +378,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OrderActionsControl
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		if(sId==null) {
 			resp.setStatus(AjaxResponse.RESPONSE_STATUS_FAIURE);
@@ -445,7 +449,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OrderActionsControl
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		if(sId==null) {
 			resp.setStatus(AjaxResponse.RESPONSE_STATUS_FAIURE);
@@ -535,7 +539,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OrderActionsControl
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		if(sId==null) {
 			resp.setStatus(AjaxResponse.RESPONSE_STATUS_FAIURE);

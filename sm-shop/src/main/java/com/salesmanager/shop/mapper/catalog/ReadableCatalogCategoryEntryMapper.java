@@ -26,8 +26,8 @@ public class ReadableCatalogCategoryEntryMapper implements Mapper<CatalogCategor
 	//private PricingService pricingService;
 	
 	@Autowired
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 	@Override
 	public ReadableCatalogCategoryEntry convert(CatalogCategoryEntry source, MerchantStore store, Language language) {
@@ -43,7 +43,7 @@ public class ReadableCatalogCategoryEntryMapper implements Mapper<CatalogCategor
 		
 		try {
 			//ReadableProductPopulator readableProductPopulator = new ReadableProductPopulator();
-			//readableProductPopulator.setimageUtils(imageUtils);
+			//readableProductPopulator.setImageFilePath(imageFilePath);
 			//readableProductPopulator.setPricingService(pricingService);
 			
 			//ReadableProduct readableProduct = readableProductPopulator.populate(source.getProduct(), store, language);

@@ -60,8 +60,8 @@ public class ContentFacadeImpl implements ContentFacade {
 	private LanguageService languageService;
 
 	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+
+	private ImageFilePath imageFilePath;
 
 	@Inject
 	private FilePathUtils fileUtils;
@@ -99,8 +99,8 @@ public class ContentFacadeImpl implements ContentFacade {
 
 	@Override
 	public String absolutePath(MerchantStore store, String file) {
-		return new StringBuilder().append(imageUtils.getContextPath())
-				.append(imageUtils.buildStaticImageUtils(store, file)).toString();
+		return new StringBuilder().append(imageFilePath.getContextPath())
+				.append(imageFilePath.buildStaticImageUtils(store, file)).toString();
 	}
 
 	@Override
@@ -419,7 +419,7 @@ public class ContentFacadeImpl implements ContentFacade {
 			box.setName(contentDescription.get().getName());
 			box.setBoxContent(contentDescription.get().getDescription());
 		}
-		String staticImageFilePath = imageUtils.buildStaticImageUtils(store, content.getCode() + ".jpg");
+		String staticImageFilePath = imageFilePath.buildStaticImageUtils(store, content.getCode() + ".jpg");
 		box.setImage(staticImageFilePath);
 		return box;
 	}

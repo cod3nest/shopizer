@@ -22,8 +22,8 @@ import com.salesmanager.shop.utils.ImageFilePath;
 public class ReadableProductOptionValueMapper implements Mapper<ProductOptionValue, ReadableProductOptionValueEntity> {
 
   @Autowired
-  @Qualifier("imageFilePath")
-  private ImageFilePath imageUtils;
+
+  private ImageFilePath imageFilePath;
 
   @Override
   public ReadableProductOptionValueEntity merge(ProductOptionValue source, ReadableProductOptionValueEntity destination,
@@ -57,7 +57,7 @@ public class ReadableProductOptionValueMapper implements Mapper<ProductOptionVal
     	readableProductOptionValue.setOrder(source.getProductOptionValueSortOrder().intValue());
     }
     if(!StringUtils.isBlank(source.getProductOptionValueImage())) {
-    	readableProductOptionValue.setImage(imageUtils.buildProductPropertyImageUtils(store, source.getProductOptionValueImage()));
+    	readableProductOptionValue.setImage(imageFilePath.buildProductPropertyImageUtils(store, source.getProductOptionValueImage()));
     }
     
     return readableProductOptionValue;

@@ -14,6 +14,8 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.LabelUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,20 +37,19 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ProductAttributeController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductAttributeController.class);
-	
 	private final static String TEXT_OPTION = "text";
 	
-	private ProductAttributeService productAttributeService;
-	private ProductService productService;
-	private ProductPriceUtils priceUtil;
-	
-	ProductOptionService productOptionService;
-	ProductOptionValueService productOptionValueService;
-	LabelUtils messages;
+	private final ProductAttributeService productAttributeService;
+	private final ProductService productService;
+	private final ProductPriceUtils priceUtil;
+	private final  ProductOptionService productOptionService;
+	private final  ProductOptionValueService productOptionValueService;
+	private final  LabelUtils messages;
 	
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/products/attributes/list.html", method=RequestMethod.GET)
@@ -86,7 +87,7 @@ public class ProductAttributeController {
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		Long productId;
 		Product product = null;
@@ -391,7 +392,7 @@ public class ProductAttributeController {
 		MerchantStore store = (MerchantStore)request.getAttribute(Constants.ADMIN_STORE);
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		
 		try {
@@ -440,7 +441,7 @@ public class ProductAttributeController {
 		
 		AjaxResponse resp = new AjaxResponse();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		
 		Long prodoptionId;

@@ -14,6 +14,8 @@ import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.ImageFilePath;
 import com.salesmanager.shop.utils.LabelUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,28 +39,16 @@ import javax.validation.Valid;
 import java.io.InputStream;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class OptionsValueController {
-	
-	@Inject
-	LanguageService languageService;
-	
 
-	@Inject
-	ProductOptionValueService productOptionValueService;
-	
-	@Inject
-	LabelUtils messages;
-	
-	@Inject
-	private ContentService contentService;
-	
-	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(OptionsValueController.class);
-	
+	private final LanguageService languageService;
+	private final ProductOptionValueService productOptionValueService;
+	private final LabelUtils messages;
+	private final ContentService contentService;
+	private final ImageFilePath imageFilePath;
 	
 	@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/options/optionvalues.html", method=RequestMethod.GET)
@@ -313,7 +303,7 @@ public class OptionsValueController {
 				
 				entry.put("name", description.getName());
 				//entry.put("image", new StringBuilder().append(store.getCode()).append("/").append(FileContentType.PROPERTY.name()).append("/").append(option.getProductOptionValueImage()).toString());
-				entry.put("image", imageUtils.buildProductPropertyImageUtils(store, option.getProductOptionValueImage()));
+				entry.put("image", imageFilePath.buildProductPropertyImageUtils(store, option.getProductOptionValueImage()));
 				resp.addDataEntry(entry);
 				
 				
@@ -331,7 +321,7 @@ public class OptionsValueController {
 		String returnString = resp.toJSONString();
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 		
 		
@@ -374,7 +364,7 @@ public class OptionsValueController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	
@@ -409,7 +399,7 @@ public class OptionsValueController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	

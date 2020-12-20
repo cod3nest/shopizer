@@ -10,6 +10,8 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.admin.controller.ControllerConstants;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,16 +29,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ContentBoxesController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ContentBoxesController.class);
-	
-	@Inject
-	private ContentService contentService;
-	
-	@Inject
-	LanguageService languageService;
+	private final ContentService contentService;
+	private final LanguageService languageService;
 	
 	@ModelAttribute("boxPositions") 
     public Set<Map.Entry<String, String>> boxPositions() { 

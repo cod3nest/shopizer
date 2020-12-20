@@ -15,6 +15,8 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.CategoryUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -36,19 +38,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class FeaturedItemsController {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(FeaturedItemsController.class);
-	
-	@Inject
+
 	CategoryService categoryService;
-	
-	@Inject
 	ProductService productService;
-	
-	@Inject
 	ProductRelationshipService productRelationshipService;
 	
 	@PreAuthorize("hasRole('PRODUCTS')")
@@ -121,7 +117,7 @@ public class FeaturedItemsController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 
 
@@ -135,7 +131,7 @@ public class FeaturedItemsController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		
 		try {
@@ -190,7 +186,7 @@ public class FeaturedItemsController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		try {
 			

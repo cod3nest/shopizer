@@ -10,9 +10,9 @@ import com.salesmanager.shop.admin.model.content.ContentFiles;
 import com.salesmanager.shop.admin.model.web.Menu;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.utils.ImageFilePath;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,17 +42,13 @@ import java.util.*;
  * @author Carl Samson
  *
  */
+@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ContentImageController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ContentImageController.class);
-	
-	@Inject
-	private ContentService contentService;
-	
-	@Inject
-	@Qualifier("imageFilePath")
-	private ImageFilePath imageUtils;
+	private final ContentService contentService;
+	private final ImageFilePath imageFilePath;
 	
 	/**
 	 * Entry point for the file browser used from the javascript
@@ -111,7 +107,7 @@ public class ContentImageController {
 
 					@SuppressWarnings("rawtypes")
 					Map entry = new HashMap();
-					entry.put("picture", new StringBuilder().append(request.getContextPath()).append(imageUtils.buildStaticImageUtils(store, name)).toString());
+					entry.put("picture", new StringBuilder().append(request.getContextPath()).append(imageFilePath.buildStaticImageUtils(store, name)).toString());
 					
 					entry.put("name", name);
 					entry.put("id", name);
@@ -130,7 +126,7 @@ public class ContentImageController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	
@@ -239,7 +235,7 @@ public class ContentImageController {
 		
 		String returnString = resp.toJSONString();
 		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		return new ResponseEntity<String>(returnString,httpHeaders,HttpStatus.OK);
 	}
 	
